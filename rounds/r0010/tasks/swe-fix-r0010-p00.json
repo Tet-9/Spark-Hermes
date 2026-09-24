@@ -1,0 +1,33 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0010-p00",
+ "round_id": "r0010",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nC source generation produces incorrect pack functions when node name is specified\n\n#### Description\n\nWhen generating C source code with a specific node name, the pack functions are not being generated for messages that should be sent by that node. The `_is_sender` function appears to have inverted logic that prevents pack functions from being generated when they should be.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\nimport tempfile\nfrom pathlib import Path\n\n# Load a DBC file with messages that have senders\ndb = cantools.database.load_file('tests/files/dbc/motohawk.dbc')\n\n# Generate C source for a specific node\nwith tempfile.TemporaryDirectory() as tmpdir:\n    output_dir = Path(tmpdir)\n    \n    # This should generate pack functions for messages sent by the node\n    cantools.database.can.c_source.generate_c_source(\n        db, \n        output_dir / 'test.h',\n        output_dir / 'test.c', \n        node_name='SomeNode'  # Specify a node that should be a sender\n    )\n    \n    # Check the generated header file\n    with open(output_dir / 'test.h', 'r') as f:\n        content = f.read()\n        # Pack functions should be present but are missing\n        print(\"Pack function present:\", \"pack(\" in content)\n```\n\nThe generated header file is missing pack functions that should be included when the specified node is a sender of messages in the database.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__ug7nuajv",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_bit_fields",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_database_name",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_generate_fuzzer",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_no_signal_encode_decode",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_sender_node",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_sender_node_no_signal_encode_decode",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_sym",
+   "tests/test_command_line.py::CanToolsCommandLineTest::test_generate_c_source_working_directory"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

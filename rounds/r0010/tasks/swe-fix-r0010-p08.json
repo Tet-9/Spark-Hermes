@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0010-p08",
+ "round_id": "r0010",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nCorePropertiesPart.modified property returns created datetime instead of modified datetime\n\n#### Description\n\nThe `modified` property of `CorePropertiesPart` is returning the created datetime instead of the modified datetime. This causes issues when trying to access the actual modification time of a presentation.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom pptx.parts.coreprops import CorePropertiesPart\nimport datetime as dt\n\n# Create a default core properties part\ncore_props = CorePropertiesPart.default(None)\n\n# The modified property should return the modification time, not creation time\nprint(\"Created:\", core_props.created)\nprint(\"Modified:\", core_props.modified)\n\n# These should be different values, but they return the same\nassert core_props.created != core_props.modified  # This will fail\n```\n\nWhen working with existing presentations that have different created and modified timestamps, the `modified` property incorrectly returns the created timestamp instead of the actual modification time.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "scanny__python-pptx.278b47b1.func_basic__m8mos3ru",
+  "environment": "jyangballin/swesmith.x86_64.scanny_1776_python-pptx.278b47b1",
+  "fail_to_pass": [
+   "tests/parts/test_coreprops.py::DescribeCorePropertiesPart::it_can_construct_a_default_core_props",
+   "tests/parts/test_coreprops.py::DescribeCorePropertiesPart::it_knows_the_date_property_values[modified-None]"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

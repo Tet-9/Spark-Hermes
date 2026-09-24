@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0010-p10",
+ "round_id": "r0010",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nARXML signal initial values not loaded correctly for different AUTOSAR versions\n\nWhen loading ARXML files, signal initial values are not being loaded correctly due to incorrect version checking logic. The issue affects both AUTOSAR 3.x and 4.x files.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load AUTOSAR 4.x file\ndb4 = cantools.db.load_file('tests/files/arxml/system-4.2.arxml')\nalarm_signal = db4.get_message_by_name('AlarmStatus').signals[0]\nprint(f\"AUTOSAR 4.x FireAlarm initial value: {alarm_signal.initial}\")\n# Expected: 0, Actual: None\n\n# Load AUTOSAR 3.x file  \ndb3 = cantools.db.load_file('tests/files/arxml/system-3.2.3.arxml')\nstatic_signal = db3.get_message_by_name('Multiplexed').get_signal_by_name('Static')\nprint(f\"AUTOSAR 3.x Static initial value: {static_signal.initial}\")\n# Expected: False, Actual: None\n```\n\nThe initial values are returning `None` instead of the expected values defined in the ARXML files. This affects signal processing and default value handling in CAN message decoding.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_pm_ctrl_invert_if__27pym2df",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_no_compu_method_category_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_3_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_4_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_arxml_float_values",
+   "tests/test_list.py::CanToolsListTest::test_arxml4"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

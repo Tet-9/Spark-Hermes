@@ -1,0 +1,28 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0010-p05",
+ "round_id": "r0010",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nSubquery formatting broken in aligned indent mode\n\nDescription\n\nWhen using the aligned indent formatting mode, subqueries in parentheses are not being properly formatted. The indentation is incorrect and the SQL structure becomes difficult to read.\n\nSequence:\n1. Format a SQL query with a subquery using the aligned indent formatter\n2. The subquery content is not properly indented\n3. The output doesn't maintain proper alignment of the SELECT statement inside the parentheses\n\nFor example, when formatting a query like:\n```sql\nselect * from (select a * 2 as a from new_table) other\n```\n\nThe expected output should maintain proper indentation of the subquery, but currently the formatting is incorrect.\n\nThis also affects JOIN clauses with subqueries and window functions that use parentheses. The parenthesized content is not being properly formatted, making complex queries difficult to read.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "andialbrecht__sqlparse.e57923b3.lm_rewrite__8cul94v0",
+  "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3",
+  "fail_to_pass": [
+   "tests/test_format.py::TestFormatReindentAligned::test_basic",
+   "tests/test_format.py::TestFormatReindentAligned::test_group_by_subquery",
+   "tests/test_format.py::TestFormatReindentAligned::test_joins",
+   "tests/test_format.py::TestFormatReindentAligned::test_window_functions"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
