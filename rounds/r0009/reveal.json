@@ -1,0 +1,221 @@
+{
+ "swe-fix-r0009-00": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_binary_op_type_errors"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_binary_type_errors_partially_uninferable"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::AsStringTest::test_as_string_for_list_containing_uninferable"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::AsStringTest::test_f_strings"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::AsStringTest::test_module2_as_string"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::AsStringTest::test_operator_precedence"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::Python35AsyncTest::test_await_as_string"
+    ]
+   ],
+   "assets_sha256": "38d1e24d18c23d01f4e6278337a56d128dfcd119dc325b2725b39b8df4ef8744",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "208bc683ff0b0fb5bf24a84d39579fd5856e72ffa4ef67ce80144d2d515b3c03",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_class_rm_funcs__52zh7ra7",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0009-01": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/dialects/test_dialect.py::TestDialect::test_decode"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/dialects/test_duckdb.py::TestDuckDB::test_encode_decode"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/dialects/test_presto.py::TestPresto::test_encode_decode"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/dialects/test_redshift.py::TestRedshift::test_redshift"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/dialects/test_snowflake.py::TestSnowflake::test_snowflake"
+    ]
+   ],
+   "assets_sha256": "eea6a37a3f1fc7f62ddd42650a7c20730bdc18a408f5b4895e886b007bfe37f6",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "27c7aa43d71b0decc09e90f113714ea43b4e255bb3acf3a6e66ed4635c49b08a",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_assign__ondxskdy",
+   "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba"
+  }
+ },
+ "swe-fix-r0009-05": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/image/test_image.py::DescribeImage::it_correctly_characterizes_known_images[2]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/image/test_image.py::DescribeImage::it_correctly_characterizes_known_images[3]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/image/test_image.py::Describe_ImageHeaderFactory::it_constructs_the_right_class_for_a_given_image_stream[call_fixture1]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/image/test_image.py::Describe_ImageHeaderFactory::it_constructs_the_right_class_for_a_given_image_stream[call_fixture2]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/image/test_jpeg.py::Describe_MarkerParser::it_can_construct_from_a_jfif_stream"
+    ]
+   ],
+   "assets_sha256": "3394958387dcf6c8549dc380716b2e53f9c0eea07106ed7ce8912146d963feb3",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "c3328abb894cdc2b35c5cef1a1e6da98d75d66f6603dd8d4c8a1b964dfca002e",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "python-openxml__python-docx.0cf6d71f.func_basic__nh3pbov7",
+   "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f"
+  }
+ },
+ "swe-fix-r0009-08": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/brain/test_brain.py::TestFunctoolsPartial::test_infer_partial"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_nodes.py::TestPatternMatching::test_match_mapping"
+    ]
+   ],
+   "assets_sha256": "ba0d0ff177f7b553953098f89adfbe2cb255f3c8764950aac75da14396792f16",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "199743210e7f2e9acb03d2792074ce62c89210bb61aa27c3438fbb5f748af1cd",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.combine_file__ajevivfk",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0009-09": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_infer_property_setter"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::test_infer_generated_setter"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::test_property_inference"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_regrtest.py::NonRegressionTests::test_decorator_names_inference_error_leaking"
+    ]
+   ],
+   "assets_sha256": "14f93e554f4cace9351c6701353ca53f495abb3ec4c9212f8312a949c1097cf9",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "3fae235ac5700e814352176e33c2089076720fc8dd6388880680df8689aaf3f8",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_class_rm_funcs__9qbm1ad3",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0009-11": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_datalabel.py::DescribeDataLabel::it_can_change_its_position[position_set_fixture0]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_datalabel.py::DescribeDataLabel::it_can_change_whether_it_has_a_text_frame[has_tf_set_fixture6]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_datalabel.py::DescribeDataLabel::it_gets_or_adds_rich_element_to_help[rich_fixture0]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_datalabel.py::DescribeDataLabel::it_has_a_font[font_fixture0]"
+    ]
+   ],
+   "assets_sha256": "faa3e2764f926725eb42474a8dc636a3ecdea5485d03d321575b695456a6481d",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "53af60134e38c5acdebc32640fa486cb3dc515ced6a5bbc1893a87d46aee156a",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "scanny__python-pptx.278b47b1.lm_rewrite__iddgx4vd",
+   "environment": "jyangballin/swesmith.x86_64.scanny_1776_python-pptx.278b47b1"
+  }
+ }
+}
