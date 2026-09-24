@@ -1,0 +1,176 @@
+{
+ "swe-fix-r0010-00": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_cdd_add"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd_repr"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_datarefs"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_cdd_add"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd_repr"
+    ]
+   ],
+   "assets_sha256": "bb54dd3a85a8d039fb9584c777f852f5325fc2cea9a9611704a5dc8d8b68581d",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "75dcb686a6e10e670d1ad0a38ba9028f3f923c1ebf326cbced1c7f84e9fc4f1d",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.lm_rewrite__68i7a30o",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ },
+ "swe-fix-r0010-05": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_php"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_python"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_python_multiple_statements"
+    ]
+   ],
+   "assets_sha256": "928cdba7afb9d0b3eca1f0b9dc3dda12efc2950d7a7be49d85548b7bf63667ee",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "1d56ca5f00af441eb399e15698fb5f3d5ab99ca4756a58721d8b23776ab47040",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "andialbrecht__sqlparse.e57923b3.combine_file__ntlkm4ui",
+   "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3"
+  }
+ },
+ "swe-fix-r0010-06": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_database.py::CanToolsDatabaseTest::test_ecu_extract_arxml"
+    ]
+   ],
+   "assets_sha256": "1f91732a7c7826b9e1cd6dff5bef2bd2e96431cb14c473c382f43c2ae699bee3",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "b4f52137d1798d7e43128204ff68e08c02fdd95be26ca03a5d09e3e84a96aeff",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.lm_rewrite__pmmbpkot",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ },
+ "swe-fix-r0010-07": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_run.py::DescribeRun::it_can_iterate_its_inner_content_items[w:r-expected0]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_run.py::DescribeRun::it_can_iterate_its_inner_content_items[w:r/(w:t\"abc\",w:br,w:lastRenderedPageBreak,w:noBreakHyphen,w:t\"def\")-expected2]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_run.py::DescribeRun::it_can_iterate_its_inner_content_items[w:r/(w:t\"foo\",w:cr,w:t\"bar\")-expected1]"
+    ]
+   ],
+   "assets_sha256": "c4a00a5777b18ef512a7a7d2d855606546a731e682e4a85dd2af797e315c2c0d",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "79faaf0760d9007bdc677cba5ebb927a9b6133633d467f7e147b6313d4086b0f",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "python-openxml__python-docx.0cf6d71f.func_basic__lwpo0ghu",
+   "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f"
+  }
+ },
+ "swe-fix-r0010-08": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_xmlwriter.py::Describe_XyChartXmlWriter::it_can_generate_xml_for_xy_charts[xml_fixture0]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_xmlwriter.py::Describe_XyChartXmlWriter::it_can_generate_xml_for_xy_charts[xml_fixture2]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/chart/test_xmlwriter.py::Describe_XyChartXmlWriter::it_can_generate_xml_for_xy_charts[xml_fixture4]"
+    ]
+   ],
+   "assets_sha256": "7384b71714a82ee6fed31f4891d151802c0f94b39891ddc8a8462d1fa8a562b3",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "0c1419dcde93d671f076309a7f161abb83b283e6b0c6d6e698bb3c954df326dc",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "scanny__python-pptx.278b47b1.lm_rewrite__rala1oem",
+   "environment": "jyangballin/swesmith.x86_64.scanny_1776_python-pptx.278b47b1"
+  }
+ },
+ "swe-fix-r0010-10": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_monitor.py::CanToolsMonitorTest::test_reset"
+    ]
+   ],
+   "assets_sha256": "41ca21b7c6188254daabf6695939504d9b29f2b682dc39d740d8bf6642c092df",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "648ba391de01725e87cb1317bd0186b10a732eab1c36778e947bc9a2d93779c0",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.func_pm_remove_assign__2hwa7vf6",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ }
+}
