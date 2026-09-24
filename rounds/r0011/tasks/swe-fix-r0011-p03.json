@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p03",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nMissing object evaluates to True instead of False\n\n#### Description\n\nThe `missing` object from marshmallow now evaluates to `True` when used in boolean contexts, but it should evaluate to `False` to maintain expected behavior.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom marshmallow import missing\n\n# This should return False but now returns True\nprint(bool(missing))  # Expected: False, Actual: True\n\n# This affects conditional logic\nif missing:\n    print(\"This shouldn't print\")  # But it does now\n\n# Also affects truthiness checks\nresult = missing or \"default_value\"\nprint(result)  # Expected: \"default_value\", Actual: <marshmallow.missing>\n```\n\nThe `missing` object is supposed to be falsy to allow for proper default value handling and conditional logic in marshmallow schemas.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "marshmallow-code__marshmallow.9716fc62.func_basic__v3llodp3",
+  "environment": "jyangballin/swesmith.x86_64.marshmallow-code_1776_marshmallow.9716fc62",
+  "fail_to_pass": [
+   "tests/test_error_store.py::test_missing_is_falsy"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

@@ -1,0 +1,28 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p01",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nCDD file parsing produces incorrect data field properties\n\nWhen loading CDD files, the diagnostic data fields are being parsed with incorrect properties. The byte order, bit length, start positions, minimum/maximum values, and choices are all getting mixed up or inverted.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load a CDD file\ndb = cantools.db.load_file('tests/files/cdd/example.cdd', encoding='iso-8859-1')\n\n# Check a data field from the Coding DID\ndid = db.get_did_by_name('Coding')\ndata = did.get_data_by_name('Country_variant')\n\nprint(f\"Expected byte_order: big_endian, Got: {data.byte_order}\")\nprint(f\"Expected length: 4, Got: {data.length}\")\nprint(f\"Expected start: 3, Got: {data.start}\")\nprint(f\"Expected choices: {{0: '(not defined)', 1: 'Europe', 2: 'USA', 3: 'Japan', 4: '(others)'}}\")\nprint(f\"Got choices: {data.choices}\")\n```\n\nThe data fields are showing up with:\n- Byte order flipped (little_endian instead of big_endian)\n- Length incremented by 1 \n- Start positions shifted\n- Min/max values swapped\n- Choices dictionary populated incorrectly or missing entirely\n\nThis affects encoding/decoding of diagnostic data and makes the parsed CDD files unusable for their intended purpose.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.combine_module__0115r8j2",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd_repr",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd_repr"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

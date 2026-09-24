@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p02",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n### Issue: Unexpected 'NoUnit' Output in ARXML Processing\n\n#### Description\n\nAfter updating the ARXML processing logic, I encountered an issue where the unit 'NoUnit' is unexpectedly returned instead of `None` in certain scenarios. This behavior is inconsistent with the expected output and affects the handling of ARXML files.\n\n#### Steps to Reproduce\n\n1. Load an ARXML file using the `SystemLoader` class.\n2. Ensure the ARXML file contains signals or computation methods without a defined unit.\n3. Attempt to extract the unit information using the `_load_system_signal_unit` method.\n\n#### Expected Outcome\n\nThe method should return `None` when no unit is defined in the ARXML file.\n\n#### Actual Outcome\n\nThe method returns 'NoUnit' instead of `None`, leading to incorrect processing of ARXML data.\n\n#### Additional Information\n\n- The issue seems to be related to the recent changes in the `_load_system_signal_unit` method.\n- This behavior is observed in both AUTOSAR 3 and AUTOSAR 4 files.\n\n#### Environment\n\n- Operating System: Linux\n- Python Version: 3.10.15\n- Relevant Libraries: [Library versions if applicable]\n\nPlease let me know if further information is needed to address this issue.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.lm_rewrite__ljq5p0ug",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_4_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_arxml_float_values",
+   "tests/test_list.py::CanToolsListTest::test_arxml4"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

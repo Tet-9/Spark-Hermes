@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p07",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nCore properties title getter returns modified value instead of original\n\n#### Description\n\nThe `title` property getter in `CorePropertiesPart` is unexpectedly modifying the title text by stripping whitespace and converting to lowercase, rather than returning the original value as stored.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom pptx import Presentation\n\n# Create a new presentation\nprs = Presentation()\n\n# Set a title with mixed case and whitespace\nprs.core_properties.title = \"  My Presentation Title  \"\n\n# Get the title back - should return original value\nprint(\"Expected: '  My Presentation Title  '\")\nprint(f\"Actual: '{prs.core_properties.title}'\")\n```\n\nThe title getter should return the exact value that was set, but instead returns a modified version with stripped whitespace and lowercase conversion.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "scanny__python-pptx.278b47b1.combine_module__m6snh4ob",
+  "environment": "jyangballin/swesmith.x86_64.scanny_1776_python-pptx.278b47b1",
+  "fail_to_pass": [
+   "tests/parts/test_coreprops.py::DescribeCorePropertiesPart::it_can_construct_a_default_core_props",
+   "tests/parts/test_coreprops.py::DescribeCorePropertiesPart::it_knows_the_string_property_values[title-Presentation]",
+   "tests/parts/test_presentation.py::DescribePresentationPart::it_knows_the_next_slide_partname_to_help"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

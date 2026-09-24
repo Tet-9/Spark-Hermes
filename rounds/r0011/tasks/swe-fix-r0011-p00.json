@@ -1,0 +1,28 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p00",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nDBC attributes getter returns mutable reference instead of copy\n\n#### Description\n\nWhen accessing the `attributes` property of a DBC specifics object, the getter returns a direct reference to the internal `_attributes` dictionary instead of a copy. This allows external code to accidentally modify the internal state of the object, which can lead to unexpected behavior.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load a DBC file\ndb = cantools.database.load_file('some_file.dbc')\n\n# Get attributes - this returns a direct reference\nattrs = db.dbc.attributes\n\n# Modifying this dict will modify the internal state\nattrs['new_key'] = 'new_value'\n\n# The internal state has been modified unexpectedly\nprint(db.dbc.attributes)  # Contains 'new_key'\n```\n\nThe issue occurs because the `attributes` property getter returns `self._attributes` directly when the internal dictionary is not empty, allowing external modification of the object's internal state.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__d2wp1yj7",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_convert.py::CanToolsConvertFullTest::test_dbc_load_can_dump_canfd",
+   "tests/test_database.py::CanToolsDatabaseTest::test_dbc_modify_names",
+   "tests/test_database.py::CanToolsDatabaseTest::test_dbc_shorten_long_names",
+   "tests/test_database.py::CanToolsDatabaseTest::test_issue_167_long_names_from_scratch"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

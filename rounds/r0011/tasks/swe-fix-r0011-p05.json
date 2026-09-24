@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0011-p05",
+ "round_id": "r0011",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nInstance `__doc__` attribute returns class name instead of docstring\n\n#### Description\n\nWhen accessing the `__doc__` attribute on an instance, it returns the class name instead of the expected docstring value.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\ncode = '''\nclass A:\n    \"test\"\n    def __init__(self):\n        self.a = 42\na = A()\na.__doc__\n'''\n\nmodule = astroid.parse(code)\ninstance_doc = list(module.body[-1].infer())[0]\nprint(f\"Expected: 'test'\")\nprint(f\"Actual: {instance_doc.value}\")\n```\n\nThe above code should print the docstring `'test'` but instead prints the class name `'A'`.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__z5tdmrj2",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_object_model.py::InstanceModelTest::test_instance_special_model"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
