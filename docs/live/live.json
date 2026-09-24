@@ -1,8 +1,8 @@
 {
  "schema": "sh-live-v3",
- "updated": 1790289523.609893,
+ "updated": 1790289878.5858061,
  "round_id": "r0011",
- "stage": "window",
+ "stage": "evaluate",
  "stages": [
   "open",
   "window",
@@ -24,6 +24,10 @@
   {
    "stage": "open",
    "t": 1790282668.9004185
+  },
+  {
+   "stage": "window",
+   "t": 1790289868.3388073
   }
  ],
  "window": {
@@ -130,9 +134,59 @@
  },
  "last_round": "r0010",
  "tasks": 6,
- "active": {},
+ "active": {
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": {
+   "pr": 240,
+   "head": "a11151be20e5113e3f3372571bccc9c1420447fa",
+   "bundle_sha256": "bd07bbfdc9b8d917e9bdccf21cbeb69b705cfda2ee2fafc7b5cbf4fe7b2970a6",
+   "incumbent": true,
+   "was_incumbent": false,
+   "defense": true,
+   "github": "harrythomasben"
+  },
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": {
+   "pr": 241,
+   "head": "5280b32fea29ba0d89aa0dfccd7e51ead9c0a003",
+   "bundle_sha256": "05895823a1e259fcb316894e389716b3099be45faf5d6433803c0e9dd6e7acfc",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "kaivaryn"
+  },
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": {
+   "pr": 243,
+   "head": "2d771aff737ef075ac57009bbf40d60ff660974f",
+   "bundle_sha256": "86e50c3204d1241ec56221aa9c0aa220e3830c436e63bfffdae5b8b5e75d45ee",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "kaivexa"
+  },
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": {
+   "pr": 242,
+   "head": "86501fdc26ee48154fce1b6cf53a7bb9152d2fab",
+   "bundle_sha256": "54d6f4e8b70dad30765c9d1b4b3efce28e807166c7f2d3f91dced0d51b1cd90d",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "dato-bitar"
+  },
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": {
+   "pr": 244,
+   "head": "ae1765ca22e1057303227e464bd2850a2fae1744",
+   "bundle_sha256": "4815bc6ab143fd8f7c5b72203d5e0e09a9426cdd57f3a073c30997ecacf27e2c",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "Tet-9"
+  }
+ },
  "rejected": {},
- "progress": {},
+ "progress": {
+  "done": 0,
+  "total": 0,
+  "by_surface": {}
+ },
  "crown": null,
  "scores": null,
  "queue": [
