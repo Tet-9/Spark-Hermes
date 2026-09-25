@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0017-p06",
+ "round_id": "r0017",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nCONCAT simplification incorrectly handles string literal groups\n\n#### Description\n\nWhen simplifying CONCAT expressions with consecutive string literals, the optimizer incorrectly processes string groups, causing the concatenation logic to be reversed.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\nfrom sqlglot import parse_one\nfrom sqlglot.optimizer import simplify\n\n# This should simplify consecutive string literals\nconcat_expr = parse_one(\"CONCAT('a', x, 'b', 'c')\", read='presto')\nsimplified = simplify.simplify(concat_expr)\nprint(simplified.sql(dialect='presto'))\n# Expected: CONCAT('a', x, 'bc')\n# Actual: incorrect output\n```\n\nThe issue occurs when the simplify_concat function processes groups of consecutive string literals. Instead of combining the string literals into a single literal and keeping non-string expressions as-is, the logic appears to be inverted.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_ctrl_invert_if__euaivjhp",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/test_optimizer.py::TestOptimizer::test_optimize",
+   "tests/test_optimizer.py::TestOptimizer::test_simplify",
+   "tests/test_optimizer.py::TestOptimizer::test_tpcds"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

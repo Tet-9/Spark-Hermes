@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0017-p01",
+ "round_id": "r0017",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nReindent filter breaks with long identifier lists containing functions\n\n#### Description\n\nWhen formatting SQL with `reindent=True` and `wrap_after` set, the reindent filter fails to properly handle long identifier lists that contain function calls. The formatting produces incorrect output that doesn't match the expected wrapped format.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlparse\n\nsql = \"select 'abc' as foo, json_build_object('a',  a,'b', b, 'c', c, 'd', d, 'e', e) as col2col3 from my_table\"\nformatted = sqlparse.format(sql, reindent=True, wrap_after=30)\nprint(formatted)\n```\n\nExpected output:\n```sql\nselect 'abc' as foo,\n       json_build_object('a',\n         a, 'b', b, 'c', c, 'd', d,\n         'e', e) as col2col3\nfrom my_table\n```\n\nThe actual output doesn't wrap the long identifier list properly when functions are involved.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "andialbrecht__sqlparse.e57923b3.func_pm_remove_cond__of1s7nm8",
+  "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3",
+  "fail_to_pass": [
+   "tests/test_format.py::TestFormatReindent::test_long_identifier_list_with_functions"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

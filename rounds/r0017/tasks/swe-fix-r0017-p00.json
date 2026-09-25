@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0017-p00",
+ "round_id": "r0017",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nLambda inference ignores context parameter\n\n#### Description\n\nLambda functions are not properly respecting the inference context parameter, causing incorrect inference results when the context matters for variable resolution.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\ncode = '''\nmirror = lambda x=None: x\n\nun = mirror(1)\n'''\n\nast = astroid.parse(code, __name__)\ninferred = list(ast.igetattr('un'))\nprint(f\"Expected: Const(1), Got: {inferred[0]}\")\n```\n\nAlso affects lambda methods in classes:\n\n```python\nimport astroid\n\ncode = '''\nclass X:\n   m = lambda self, arg: self.z + arg\n   z = 24\n\nX().m(4)\n'''\n\nast_node = astroid.extract_node(code + ' #@')\ninferred = next(ast_node.infer())\nprint(f\"Expected: Const(28), Got: {inferred}\")\n```\n\nThe lambda inference is not using the proper context, leading to incorrect results when lambdas reference variables or attributes that depend on the calling context.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__ukxzghr5",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_inference.py::ArgumentsTest::test_args",
+   "tests/test_inference.py::InferenceTest::test_callfunc_context_lambda",
+   "tests/test_inference.py::InferenceTest::test_inner_value_redefined_by_subclass",
+   "tests/test_inference.py::InferenceTest::test_inner_value_redefined_by_subclass_with_mro",
+   "tests/test_inference.py::InferenceTest::test_lambda_as_methods"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

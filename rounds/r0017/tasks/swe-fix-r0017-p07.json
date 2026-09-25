@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0017-p07",
+ "round_id": "r0017",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nDatabase buses property returns reversed order\n\n#### Description\n\nThe `buses` property of a CAN database returns buses in reversed order compared to the expected order from the loaded file.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load a database file with multiple buses\ndb = cantools.db.load_file('tests/files/kcd/the_homer.kcd')\n\n# Check the bus order\nprint(\"Expected bus order:\")\nprint(\"buses[0].name should be 'Motor'\")\nprint(\"buses[1].name should be 'Instrumentation'\") \nprint(\"buses[2].name should be 'Comfort'\")\n\nprint(\"\\nActual bus order:\")\nfor i, bus in enumerate(db.buses):\n    print(f\"buses[{i}].name = '{bus.name}'\")\n\n# This will show the buses in reverse order\n# Also affects get_bus_by_name() which relies on bus indexing\ncomfort_bus = db.get_bus_by_name('Comfort')\nprint(f\"\\nget_bus_by_name('Comfort') returns: {comfort_bus}\")\nprint(f\"Expected: bus('Comfort', None)\")\n```\n\nThe buses are returned in the wrong order, which breaks code that expects buses to be in the same order as they appear in the original database file.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__kgtnh7fn",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_get_bus_by_name",
+   "tests/test_database.py::CanToolsDatabaseTest::test_the_homer"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

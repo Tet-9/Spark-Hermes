@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0017-p03",
+ "round_id": "r0017",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# UnaryOp.op_precedence() crashes on \"not\" operator\n\n## Description\n\nWhen using the `UnaryOp` class with the \"not\" operator, the `op_precedence()` method crashes with a KeyError.\n\n```python\nfrom astroid.nodes.node_classes import UnaryOp\n\n# Create a UnaryOp with \"not\" operator\nunary_op = UnaryOp(op=\"not\", operand=None)\n\n# This crashes with KeyError: 'not'\nprecedence = unary_op.op_precedence()\n```\n\nThe error occurs because the method tries to access `OP_PRECEDENCE[self.op]` directly without checking if the operator is \"not\", which requires special handling.\n\n## Expected behavior\n\nThe `op_precedence()` method should return the correct precedence value for all operators, including the \"not\" operator.\n\n## Actual behavior\n\n```\nKeyError: 'not'\n```\n\nThis affects code that relies on the precedence of unary operators, particularly when dealing with boolean expressions using \"not\".\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__mz84if55",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_nodes.py::AsStringTest::test_module2_as_string"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
