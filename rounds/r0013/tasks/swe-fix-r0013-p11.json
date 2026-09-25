@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0013-p11",
+ "round_id": "r0013",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nScientific notation appears in GPX output for small float values\n\n#### Description\n\nWhen parsing and re-serializing GPX files containing small float values, the output contains scientific notation (e.g., \"1.23e-05\") which is not valid in GPX format according to the GPX 1.1 specification.\n\n#### Steps/Code to Reproduce\n\n```python\nimport gpxpy\n\n# Create a GPX with small float values\ngpx = gpxpy.GPX()\ntrack = gpxpy.GPXTrack()\nsegment = gpxpy.GPXTrackSegment()\n\n# Add a point with a very small elevation value\npoint = gpxpy.GPXTrackPoint(latitude=45.0, longitude=-122.0, elevation=0.000001)\nsegment.points.append(point)\ntrack.segments.append(segment)\ngpx.tracks.append(track)\n\n# Convert to XML\nxml_output = gpx.to_xml()\nprint(xml_output)\n\n# Check if scientific notation is present\nif 'e-' in xml_output:\n    print(\"ERROR: Scientific notation found in GPX output!\")\n    print(\"This violates GPX format specification\")\nelse:\n    print(\"OK: No scientific notation found\")\n```\n\nThe output contains scientific notation like `1e-06` instead of the expected decimal format `0.000001`.\n\nThis happens when small float values are converted to strings, causing the GPX output to be invalid according to the GPX specification which doesn't allow scientific notation.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tkrajina__gpxpy.09fc46b3.func_pm_ctrl_shuffle__pfwp2hjy",
+  "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3",
+  "fail_to_pass": [
+   "test.py::GPXTests::test_small_floats"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

@@ -1,0 +1,32 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0013-p04",
+ "round_id": "r0013",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nContent types element generation broken after recent changes\n\n#### Description\n\nThe `_ContentTypesItem._element` property is not generating valid XML content. When trying to create content types elements, the method appears to have issues with the order of operations and variable initialization.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom docx.opc.pkgwriter import _ContentTypesItem\n\n# Create a content types item and try to get its element\ncti = _ContentTypesItem()\ncti.add_default('xml', 'application/xml')\ncti.add_override('/word/document.xml', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml')\n\n# This should work but fails\nelement = cti._element\nprint(element.xml)\n```\n\nAlso affects package writing functionality:\n\n```python\nfrom docx.opc.pkgwriter import PackageWriter\nfrom unittest.mock import Mock\n\npkg_file = Mock()\npkg_rels = Mock() \nparts = Mock()\n\n# This fails during the write process\nPackageWriter.write(pkg_file, pkg_rels, parts)\n```\n\nThe issue seems to be related to how the content types XML element is being constructed and the order in which different components are written to the package.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.combine_file__iukhnk18",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/opc/test_pkgwriter.py::DescribePackageWriter::it_can_write_a_package",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture0]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture1]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture2]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture3]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture4]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture5]",
+   "tests/opc/test_pkgwriter.py::Describe_ContentTypesItem::it_can_compose_content_types_element[xml_for_fixture6]"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

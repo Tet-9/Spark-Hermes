@@ -1,0 +1,31 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0013-p03",
+ "round_id": "r0013",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# TypeError in Did.length property: 'int' object is not iterable\n\n## Description\n\nThere's an issue with the `Did` class in the diagnostics module where the `length` property is returning an invalid value. When trying to load CDD files, the code fails with the error `TypeError: 'int' object is not iterable`.\n\n## How to reproduce\n\n1. Try to load a CDD file using the diagnostics database:\n\n```python\nimport cantools\n\n# This will fail\ndb = cantools.db.load_file('path/to/your/file.cdd')\n```\n\n2. Or try to add a CDD file to an existing database:\n\n```python\ndb = cantools.db.diagnostics.Database()\n# This will fail\ndb.add_cdd_file('path/to/your/file.cdd')\n```\n\nThe error occurs because the `length` property in the `Did` class is trying to return `len(self._length)` instead of just `self._length`. This causes the error since `_length` is an integer value and not an iterable object.\n\nAdditionally, there are several other issues in the `encode` and `decode` methods where parameter orders have been swapped and slicing operations have been modified incorrectly.\n\n## Expected behavior\n\nThe code should properly load CDD files without throwing a TypeError. The `length` property should return the integer value directly, not try to get the length of that value.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.combine_file__1w4tyzon",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_cdd_add",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_be_example_cdd_repr",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_datarefs",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_cdd_add",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd",
+   "tests/test_diagnostics_database.py::CanToolsDiagnosticsDatabaseTest::test_le_example_cdd_repr"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

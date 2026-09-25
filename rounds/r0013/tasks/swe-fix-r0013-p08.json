@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0013-p08",
+ "round_id": "r0013",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nFunctionDef.pytype() returns wrong type for methods\n\n#### Description\n\nThe `pytype()` method on `FunctionDef` nodes is returning incorrect type information for methods. When called on a method, it should return `\"builtins.instancemethod\"` but instead returns `\"builtins.function\"`.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\ncode = \"\"\"\nclass MyClass:\n    def my_method(self):\n        pass\n\ndef my_function():\n    pass\n\"\"\"\n\nmodule = astroid.parse(code)\nmethod = module['MyClass']['my_method']\nfunction = module['my_function']\n\nprint(f\"Method pytype: {method.pytype()}\")  # Should be \"builtins.instancemethod\"\nprint(f\"Function pytype: {function.pytype()}\")  # Should be \"builtins.function\"\n```\n\nExpected output:\n```\nMethod pytype: builtins.instancemethod\nFunction pytype: builtins.function\n```\n\nActual output:\n```\nMethod pytype: builtins.function\nFunction pytype: builtins.function\n```\n\nThe method is incorrectly returning `\"builtins.function\"` instead of `\"builtins.instancemethod\"`.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__xaethwf8",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_nodes.py::ImportNodeTest::test_from_self_resolve",
+   "tests/test_scoped_nodes.py::FunctionNodeTest::test_is_abstract"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

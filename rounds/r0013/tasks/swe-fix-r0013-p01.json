@@ -1,0 +1,31 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0013-p01",
+ "round_id": "r0013",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nFunction instance attributes not properly accessible after assignment\n\n#### Description\n\nWhen assigning attributes to functions, the attributes are not properly accessible through inference. This affects both direct function attribute access and class method attribute assignments.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\n# Case 1: Function instance attributes\ncode1 = '''\ndef test():\n    print(test.bar)\n\ntest.bar = 1\ntest()\n'''\n\nmodule = astroid.parse(code1)\nfunc = module.body[2].value.func.inferred()[0]\nprint(func.getattr('bar'))  # Should find the attribute but doesn't work correctly\n\n# Case 2: Class method attributes  \ncode2 = '''\nclass WebAppObject(object):\n    def registered(cls, application):\n        cls.appli = application\n        cls.schema = application.schema\n        cls.config = application.config\n        return cls\n    registered = classmethod(registered)\n'''\n\nastroid_module = astroid.parse(code2)\ncls = astroid_module['WebAppObject']\nprint(sorted(cls.locals.keys()))  # Missing expected attributes\n\n# Case 3: Function __doc__ augmentation\ncode3 = '''\nclass A:\n    def test(self):\n        \"a\"\n    # Add `__doc__` to `FunctionDef.instance_attrs` via an `AugAssign`\n    test.__doc__ += 'b'\n    test\n'''\n\nnode = astroid.extract_node(code3)\ninferred = next(node.infer())\nattrs = inferred.getattr('__doc__')\nprint(len(attrs))  # Should be 2 but returns different count\n```\n\nThe issue appears to affect how function attributes are stored and retrieved, particularly when functions have attributes assigned to them after definition.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_ctrl_invert_if__tioszj1u",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_builder.py::BuilderTest::test_inferred_build",
+   "tests/test_inference.py::InferenceTest::test_unary_op_assignment",
+   "tests/test_inference.py::test_allow_retrieving_instance_attrs_and_special_attrs_for_functions",
+   "tests/test_scoped_nodes.py::ClassNodeTest::test_classmethod_attributes",
+   "tests/test_scoped_nodes.py::ClassNodeTest::test_cls_special_attributes_2",
+   "tests/test_scoped_nodes.py::ClassNodeTest::test_getattr_method_transform",
+   "tests/test_scoped_nodes.py::FunctionNodeTest::test_func_instance_attr"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
