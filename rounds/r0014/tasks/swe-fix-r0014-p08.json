@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0014-p08",
+ "round_id": "r0014",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nARXML signal initial values not loaded correctly\n\nWhen loading ARXML files, signal initial values are not being parsed correctly. The loader appears to be returning incorrect values or None instead of the actual initial values specified in the ARXML.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load an ARXML file with signal initial values\ndb = cantools.db.load_file('tests/files/arxml/system-4.2.arxml')\n\n# Check a signal that should have an initial value\nmessage = db.get_message_by_name('Message1')\nsignal = message.get_signal_by_name('signal1')\n\nprint(f\"Expected initial value: 25\")\nprint(f\"Actual initial value: {signal.initial}\")\n```\n\nThe signal should have an initial value of 25 but returns None or an incorrect value instead.\n\nThis affects multiple signals across different ARXML files and appears to impact both direct initial value specifications and constant references.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__f8z7h7ij",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_no_compu_method_category_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_3_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_4_arxml",
+   "tests/test_database.py::CanToolsDatabaseTest::test_system_arxml_float_values",
+   "tests/test_list.py::CanToolsListTest::test_arxml4"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

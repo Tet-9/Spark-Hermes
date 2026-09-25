@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0014-p01",
+ "round_id": "r0014",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nCOALESCE simplification breaks when removing constant detection loop\n\n#### Description\n\nThe COALESCE simplification function is throwing a `NameError` because it's trying to use an undefined variable `arg_index`. This happens when the function attempts to simplify COALESCE expressions but the loop that was supposed to find the first constant argument and set `arg_index` has been removed.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\nfrom sqlglot import optimizer\n\n# This will trigger the error during optimization\nsql = \"SELECT COALESCE(NULL, 'test', 'fallback') FROM table1\"\nparsed = sqlglot.parse_one(sql)\noptimized = optimizer.optimize(parsed)\n```\n\nThe error occurs when the simplify_coalesce function tries to access `arg_index` without it being defined, since the loop that was meant to find the first constant argument index was removed but the code still references this variable.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_loop__bgm5m04s",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/test_optimizer.py::TestOptimizer::test_simplify",
+   "tests/test_optimizer.py::TestOptimizer::test_tpcds"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

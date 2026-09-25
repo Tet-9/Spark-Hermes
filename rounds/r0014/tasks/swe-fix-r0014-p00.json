@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0014-p00",
+ "round_id": "r0014",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nDollar-quoted strings parsing fails with incorrect error condition\n\n#### Description\n\nWhen parsing dollar-quoted strings (like `$foo$content$foo$`), the parser incorrectly raises \"No closing $ found\" error even when the string is properly closed. This affects parsing of functions with dollar-quoted bodies, particularly in Databricks SQL.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\n\n# This should parse successfully but raises an error\nsql = \"CREATE FUNCTION add_one(x INT) RETURNS INT LANGUAGE PYTHON AS $foo$def add_one(x):\\n  return x+1$foo$\"\ntry:\n    result = sqlglot.transpile(sql, read='databricks')\n    print(\"Success:\", result)\nexcept Exception as e:\n    print(\"Error:\", e)\n```\n\nExpected: The SQL should parse successfully and return the transpiled result.\nActual: Raises `ParseError: No closing $ found` even though the dollar-quoted string is properly terminated with `$foo$`.\n\nThe issue occurs with any dollar-quoted string where the opening and closing tags match properly, but the parser logic incorrectly validates the closing condition.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_ctrl_invert_if__awkihszf",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/dialects/test_databricks.py::TestDatabricks::test_databricks"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

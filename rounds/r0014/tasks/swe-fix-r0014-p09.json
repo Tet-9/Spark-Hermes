@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0014-p09",
+ "round_id": "r0014",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nROW FORMAT DELIMITED parsing incomplete for ESCAPED BY and COLLECTION ITEMS clauses\n\n#### Description\n\nWhen parsing Hive DDL statements with ROW FORMAT DELIMITED properties, the parser is not correctly handling the `ESCAPED BY` clause that follows `FIELDS TERMINATED BY`, and the `COLLECTION ITEMS TERMINATED BY` clause is completely missing from the parsed output.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\n\n# This should parse both ESCAPED BY and COLLECTION ITEMS TERMINATED BY\nsql = \"\"\"\nINSERT OVERWRITE DIRECTORY 'x' \nROW FORMAT DELIMITED \nFIELDS TERMINATED BY '\\x01' \nESCAPED BY '\\\\'\nCOLLECTION ITEMS TERMINATED BY ',' \nMAP KEYS TERMINATED BY ':' \nLINES TERMINATED BY '' \nSTORED AS TEXTFILE \nSELECT * FROM `a`.`b`\n\"\"\"\n\nparsed = sqlglot.parse_one(sql, dialect=\"hive\")\nprint(parsed)\n\n# The ESCAPED BY and COLLECTION ITEMS TERMINATED BY clauses are missing\n```\n\nThe parser should recognize and preserve both:\n- `ESCAPED BY` clause following `FIELDS TERMINATED BY`  \n- `COLLECTION ITEMS TERMINATED BY` clause\n\nCurrently these clauses are being skipped during parsing, resulting in incomplete ROW FORMAT DELIMITED property handling.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_cond__82xlozqh",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/dialects/test_hive.py::TestHive::test_hive",
+   "tests/test_serde.py::TestSerDe::test_serde",
+   "tests/test_transpile.py::TestTranspile::test_identity"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
