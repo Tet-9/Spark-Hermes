@@ -1,0 +1,131 @@
+{
+ "swe-fix-r0016-00": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_tokens.py::TestTokens::test_jinja"
+    ]
+   ],
+   "assets_sha256": "7af600a5c16138c7684565a2317c4425d834461fe32cea075b9594fa212f0bd8",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "454d10176cad00423b2470ee08efa6c8984168a482e1dda21b4db2df2fe3c1e2",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "tobymao__sqlglot.036601ba.func_pm_op_change__s3bic552",
+   "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba"
+  }
+ },
+ "swe-fix-r0016-02": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_monitor.py::CanToolsMonitorTest::test_immediate_quit"
+    ]
+   ],
+   "assets_sha256": "52a3122836effffdbd438152089958d1b7e7bc67ac85ee5c93b536fc0c8fa851",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "e224e7cf4840266d1b1714b3900a48d52c9e11774ee179c1f1ca7cc3b120e2c7",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.lm_rewrite__g368ni0a",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ },
+ "swe-fix-r0016-08": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "test.py::GPXTests::test_track_points_data"
+    ]
+   ],
+   "assets_sha256": "29ffb3b4cf5c4ecc346c6c3b53cac1a012e165cd7c430c3256ff6a028bd3a4a2",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "cee518c86edd3e6b009f20694af85048b466507e2ba7e7c7adbde6e7d0914013",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "tkrajina__gpxpy.09fc46b3.func_basic__w5tyt8o4",
+   "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3"
+  }
+ },
+ "swe-fix-r0016-14": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/openid/connect/core/endpoints/test_claims_handling.py::TestClaimsHandling::test_claims_stored_on_code_creation"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/openid/connect/core/endpoints/test_claims_handling.py::TestClaimsHandling::test_invalid_claims"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/openid/connect/core/grant_types/test_hybrid.py::OpenIDHybridCodeIdTokenTest::test_required_nonce"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/openid/connect/core/grant_types/test_hybrid.py::OpenIDHybridCodeIdTokenTokenTest::test_required_nonce"
+    ]
+   ],
+   "assets_sha256": "6af6a6364763d47c9db65c0ea8bd8fc4591b927307c24e6bedd8acaced0f2158",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "708bb2daa3612aaac21e2d3a5c5fc3ff39178630f3343135d89b88a7c5df3c96",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "oauthlib__oauthlib.1fd52536.combine_module__ujvu3vnt",
+   "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536"
+  }
+ },
+ "swe-fix-r0016-15": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_optimizer.py::TestOptimizer::test_optimize"
+    ]
+   ],
+   "assets_sha256": "eeee21264344af1b3bd9e88066be26d63b03bc4d8dfa7a304d132edfbf73c3b8",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "05feec2b0a431f02bd663d3b8d83c33b1b8b58c310e6ed207b20d0765dd02163",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_loop__ucbz18p6",
+   "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba"
+  }
+ },
+ "swe-fix-r0016-16": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_autosar.py::CanToolsAutosarTest::test_autosar4_secoc"
+    ]
+   ],
+   "assets_sha256": "30bdfe793923e59525996df557ed767485232c50b7ecc24d8523b2fd17438474",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "84948f3a1e3a33a11dd78f3da5239d8bbce46d95793c000d85540d86c3cf2224",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.combine_file__pz97f6gv",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ }
+}
