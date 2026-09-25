@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0016-p08",
+ "round_id": "r0016",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nGPXTrackSegment.get_time_bounds() returns None for start_time and end_time\n\n#### Description\n\nWhen calling `get_time_bounds()` on a GPXTrackSegment, the method returns `TimeBounds(None, None)` instead of the actual start and end times from the track points.\n\n#### Steps/Code to Reproduce\n\n```python\nimport gpxpy\nimport datetime\n\n# Create a simple GPX track segment with time data\ngpx = gpxpy.GPX()\ntrack = gpxpy.GPXTrack()\nsegment = gpxpy.GPXTrackSegment()\n\n# Add points with timestamps\nsegment.points.append(gpxpy.GPXTrackPoint(latitude=45.0, longitude=10.0, time=datetime.datetime(2023, 1, 1, 10, 0, 0)))\nsegment.points.append(gpxpy.GPXTrackPoint(latitude=45.1, longitude=10.1, time=datetime.datetime(2023, 1, 1, 10, 5, 0)))\nsegment.points.append(gpxpy.GPXTrackPoint(latitude=45.2, longitude=10.2, time=datetime.datetime(2023, 1, 1, 10, 10, 0)))\n\ntrack.segments.append(segment)\ngpx.tracks.append(track)\n\n# Get time bounds - this should return actual times but returns None\nbounds = segment.get_time_bounds()\nprint(f\"Start time: {bounds.start_time}\")  # Expected: 2023-01-01 10:00:00, Actual: None\nprint(f\"End time: {bounds.end_time}\")      # Expected: 2023-01-01 10:10:00, Actual: None\n```\n\nThe method should return the earliest and latest timestamps from the track points, but instead returns `None` for both values.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tkrajina__gpxpy.09fc46b3.func_pm_ctrl_shuffle__fs9ested",
+  "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3",
+  "fail_to_pass": [
+   "test.py::GPXTests::test_gpx_fill_time_data_with_end_time_and_time_delta",
+   "test.py::GPXTests::test_gpx_fill_time_data_with_start_time_and_end_time",
+   "test.py::GPXTests::test_gpx_fill_time_data_with_start_time_and_end_time_and_time_delta",
+   "test.py::GPXTests::test_gpx_fill_time_data_with_start_time_and_time_delta",
+   "test.py::GPXTests::test_time_bounds"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

@@ -1,0 +1,31 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0016-p00",
+ "round_id": "r0016",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nAlias expansion not working in GROUP BY and HAVING clauses\n\n#### Description\n\nAfter a recent change, alias expansion in GROUP BY and HAVING clauses has stopped working. Queries that should expand aliases to their underlying expressions are no longer being processed correctly.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\nfrom sqlglot import optimizer\n\n# This should expand the alias 'd' in GROUP BY to 'a + 1'\nsql = 'SELECT a + 1 AS d, d + 1 AS e FROM x WHERE e > 1 GROUP BY e'\nresult = optimizer.optimize(sql)\nprint(\"Expected: SELECT \\\"x\\\".\\\"a\\\" + 1 AS \\\"d\\\", \\\"x\\\".\\\"a\\\" + 1 + 1 AS \\\"e\\\" FROM \\\"x\\\" AS \\\"x\\\" WHERE (\\\"x\\\".\\\"a\\\" + 2) > 1 GROUP BY \\\"x\\\".\\\"a\\\" + 1 + 1\")\nprint(\"Actual:  \", result.sql())\n\n# BigQuery specific case with alias expansion in GROUP BY and HAVING\nfrom sqlglot.schema import MappingSchema\nunused_schema = {'l': {'c': 'int'}}\nsql = \"WITH data AS (SELECT 1 AS id, 2 AS my_id, 'a' AS name, 'b' AS full_name) SELECT id AS my_id, CONCAT(id, name) AS full_name FROM data WHERE my_id = 1 GROUP BY my_id, full_name HAVING my_id = 1\"\nresult = optimizer.qualify_columns.qualify_columns(\n    sqlglot.parse_one(sql, dialect='bigquery'), \n    schema=MappingSchema(schema=unused_schema, dialect='bigquery')\n)\nprint(\"Expected: WITH data AS (SELECT 1 AS id, 2 AS my_id, 'a' AS name, 'b' AS full_name) SELECT data.id AS my_id, CONCAT(data.id, data.name) AS full_name FROM data WHERE data.my_id = 1 GROUP BY data.id, CONCAT(data.id, data.name) HAVING data.id = 1\")\nprint(\"Actual:  \", result.sql())\n```\n\nThe aliases in GROUP BY and HAVING clauses are not being expanded to their underlying expressions, which breaks query optimization and can lead to incorrect SQL generation.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_loop__b691s4hc",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/test_optimizer.py::TestOptimizer::test_canonicalize",
+   "tests/test_optimizer.py::TestOptimizer::test_expand_alias_refs",
+   "tests/test_optimizer.py::TestOptimizer::test_optimize",
+   "tests/test_optimizer.py::TestOptimizer::test_pushdown_projection",
+   "tests/test_optimizer.py::TestOptimizer::test_qualify_columns",
+   "tests/test_optimizer.py::TestOptimizer::test_tpcds",
+   "tests/test_optimizer.py::TestOptimizer::test_tpch"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

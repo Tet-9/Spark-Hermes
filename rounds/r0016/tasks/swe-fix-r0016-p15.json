@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0016-p15",
+ "round_id": "r0016",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nString tokenization returns empty text instead of parsing content\n\n#### Description\n\nWhen tokenizing strings, the tokenizer is returning empty text instead of properly parsing the string content. This affects both regular string literals and template strings with embedded expressions.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom sqlglot.dialects import BigQuery\nfrom sqlglot.tokens import Tokenizer\n\n# Basic string tokenization\ntokenizer = Tokenizer()\ntokens = tokenizer.tokenize(\"'x\\n y'\")\nprint(f\"Token text: '{tokens[0].text}'\")  # Expected: 'x\\n y', Actual: ''\n\n# Template string with variables\ntokenizer = BigQuery.Tokenizer()\ntokens = tokenizer.tokenize(\"'{{ var('x') }}'\")\nfor token in tokens:\n    print(f\"Token: {token.token_type}, Text: '{token.text}'\")\n# Expected to parse the string content properly, but gets empty strings\n```\n\nThe tokenizer appears to be cutting off string content and returning empty text where it should be returning the actual string contents. This breaks parsing of SQL queries that contain string literals or template expressions.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_loop__mduimi9e",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/test_tokens.py::TestTokens::test_jinja",
+   "tests/test_tokens.py::TestTokens::test_token_line_col"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
