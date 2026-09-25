@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p00",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n### Bug: Unable to Retrieve Latent Style by Name\n\n#### Description\n\nI've encountered an issue when trying to access latent styles by name using dictionary-style access. The method seems to fail when the style name is not directly found in the list of latent styles. This behavior is unexpected and inconsistent with the previous implementation.\n\n#### Steps to Reproduce\n\nHere's a minimal example to reproduce the issue:\n\n```python\nfrom docx.styles.latent import LatentStyles\n\n# Assuming `latent_styles` is an instance of LatentStyles\ntry:\n    latent_style = latent_styles['NonExistentStyle']\nexcept KeyError as e:\n    print(e)\n```\n\n#### Actual Outcome\n\nThe code raises a `KeyError` with the message: \"No latent style with name 'NonExistentStyle'\".\n\n#### Expected Outcome\n\nThe method should return a latent style object if the style name exists, or handle the absence of the style more gracefully, possibly by returning `None` or a default value.\n\n#### Additional Information\n\n- **Operating System**: Ubuntu 20.04\n- **Python Version**: 3.10.15\n- **Library Version**: Latest from the main branch\n\nAny insights or suggestions on how to address this would be greatly appreciated!\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.lm_rewrite__tqnjolr8",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/styles/test_latent.py::DescribeLatentStyles::it_can_get_a_latent_style_by_name[getitem_fixture1]",
+   "tests/styles/test_latent.py::DescribeLatentStyles::it_can_get_a_latent_style_by_name[getitem_fixture2]"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

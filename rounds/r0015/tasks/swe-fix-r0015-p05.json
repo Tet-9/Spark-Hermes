@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p05",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nLatentStyles.default_priority setter converts negative values to positive\n\n#### Description\n\nWhen setting a negative value for `default_priority` on a `LatentStyles` object, the value gets converted to its absolute value instead of preserving the original negative value.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom docx import Document\nfrom docx.styles.latent import LatentStyles\n\n# Create a document and access latent styles\ndoc = Document()\nlatent_styles = doc.styles.latent_styles\n\n# Set a negative priority value\nlatent_styles.default_priority = -5\n\n# The value should be -5 but becomes 5\nprint(f\"Expected: -5, Got: {latent_styles.default_priority}\")\n```\n\nThe expected behavior is that negative priority values should be preserved as-is, but currently they are converted to positive values using `abs()`.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.func_basic__rm3q8h8z",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/styles/test_latent.py::DescribeLatentStyles::it_can_change_its_default_priority[priority_set_fixture2]"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

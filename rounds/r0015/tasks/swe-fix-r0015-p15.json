@@ -1,0 +1,30 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p15",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nMultiplexed message encoding broken after recent changes\n\n#### Description\n\nMultiplexed CAN message encoding is producing incorrect byte sequences. The encoded output doesn't match expected values for messages with multiplexer signals.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\n\n# Load a database with multiplexed messages\ndb = cantools.db.load_file('tests/files/dbc/multiplex.dbc')\nmessage = db.messages[0]\n\n# Try to encode a multiplexed message\ndecoded_message = {'Multiplexor': 8, 'BIT_C': 1, 'BIT_G': 1, 'BIT_J': 1, 'BIT_L': 1}\nencoded = message.encode(decoded_message)\n\nprint(f\"Encoded: {encoded}\")\nprint(f\"Expected: {b' \\\\x00\\\\x8c\\\\x01\\\\x00\\\\x00\\\\x00\\\\x00'}\")\n```\n\nThe encoded output is `b' \\x00\\x00\\x00\\x00\\x00\\x00\\x00'` but should be `b' \\x00\\x8c\\x01\\x00\\x00\\x00\\x00'`.\n\nThis also affects other multiplexed message scenarios including:\n- Messages with multiple multiplexer levels\n- Messages from socialledge.dbc with different mux values\n- Messages with multiplexer choices\n\nThe issue appears to affect all multiplexed message encoding operations.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_pm_ctrl_shuffle__gnieg3x1",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_multiplex",
+   "tests/test_database.py::CanToolsDatabaseTest::test_multiplex_choices",
+   "tests/test_database.py::CanToolsDatabaseTest::test_multiplex_choices_padding_one",
+   "tests/test_database.py::CanToolsDatabaseTest::test_multiplex_extended",
+   "tests/test_database.py::CanToolsDatabaseTest::test_socialledge_encode_decode_mux_0",
+   "tests/test_database.py::CanToolsDatabaseTest::test_socialledge_encode_decode_mux_1"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

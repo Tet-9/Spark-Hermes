@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p04",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nIGNORE NULLS not parsed correctly when followed by RESPECT NULLS\n\nWhen parsing SQL with both `IGNORE NULLS` and `RESPECT NULLS` clauses, the parser incorrectly handles the order and returns early, causing `RESPECT NULLS` to be ignored.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlglot\n\n# This should parse both clauses but only parses the first one\nsql = \"SELECT FIRST_VALUE(col IGNORE NULLS) RESPECT NULLS OVER (ORDER BY x)\"\nparsed = sqlglot.parse_one(sql)\nprint(parsed.sql())\n\n# Expected: Both IGNORE NULLS and RESPECT NULLS should be recognized\n# Actual: Only IGNORE NULLS is parsed, RESPECT NULLS is lost\n```\n\nThe issue occurs when `IGNORE NULLS` appears before `RESPECT NULLS` in the SQL. The parser returns early after finding the first null treatment clause instead of continuing to check for additional clauses.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tobymao__sqlglot.036601ba.func_pm_ctrl_shuffle__u1u32b8l",
+  "environment": "jyangballin/swesmith.x86_64.tobymao_1776_sqlglot.036601ba",
+  "fail_to_pass": [
+   "tests/dialects/test_bigquery.py::TestBigQuery::test_bigquery",
+   "tests/dialects/test_snowflake.py::TestSnowflake::test_null_treatment",
+   "tests/test_serde.py::TestSerDe::test_serde",
+   "tests/test_transpile.py::TestTranspile::test_comments",
+   "tests/test_transpile.py::TestTranspile::test_identity"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

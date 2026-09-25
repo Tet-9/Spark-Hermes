@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p02",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nOutput format variable naming broken for Python and PHP formats\n\n#### Description\n\nWhen using `sqlparse.format()` with `output_format='python'` or `output_format='php'`, the variable names are generated incorrectly. The prefix and suffix are concatenated in the wrong order, and the counter starts from 1 instead of 0.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlparse\n\n# Python format - should generate \"sql = ...\" but generates something else\nsql = 'select * from foo;'\nresult = sqlparse.format(sql, output_format='python')\nprint(\"Expected: sql = 'select * from foo;'\")\nprint(f\"Actual: {result}\")\n\n# PHP format - should generate \"$sql = ...\" but generates something else  \nresult = sqlparse.format(sql, output_format='php')\nprint(\"Expected: $sql = \\\"select * from foo;\\\";\")\nprint(f\"Actual: {result}\")\n\n# Multiple statements should use sql, sql2, sql3, etc.\nsql_multi = 'select * from foo; select 1 from dual'\nresult = sqlparse.format(sql_multi, output_format='python')\nprint(\"Expected: sql = 'select * from foo; '\\\\nsql2 = 'select 1 from dual'\")\nprint(f\"Actual: {result}\")\n```\n\nThe variable names are not being constructed properly, affecting both single and multiple statement formatting.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "andialbrecht__sqlparse.e57923b3.func_basic__g824bh0y",
+  "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3",
+  "fail_to_pass": [
+   "tests/test_format.py::TestOutputFormat::test_php",
+   "tests/test_format.py::TestOutputFormat::test_python",
+   "tests/test_format.py::TestOutputFormat::test_python_multiple_statements"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

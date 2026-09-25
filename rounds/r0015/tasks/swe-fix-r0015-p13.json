@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0015-p13",
+ "round_id": "r0015",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nMissing prepare_refresh_token_request method in OAuth2 Client\n\n#### Description\n\nThe `prepare_refresh_token_request` method has been removed from the OAuth2 Client class, breaking existing functionality for refresh token requests.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom oauthlib.oauth2 import Client\n\nclient = Client('my_client_id')\nurl = 'https://example.com/token'\ntoken = 'my_refresh_token'\n\n# This should work but raises AttributeError\nu, h, b = client.prepare_refresh_token_request(url, token)\n```\n\nExpected: Method should prepare a proper refresh token request with URL, headers, and body.\nActual: `AttributeError: 'Client' object has no attribute 'prepare_refresh_token_request'`\n\nThe method was previously available and used to prepare refresh token requests according to RFC 6749 specifications.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "oauthlib__oauthlib.1fd52536.func_pm_class_rm_funcs__9bdki4yk",
+  "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536",
+  "fail_to_pass": [
+   "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_prepare_refresh_token_request"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
