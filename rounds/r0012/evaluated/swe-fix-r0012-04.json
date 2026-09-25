@@ -1,0 +1,29 @@
+{
+ "schema": "sh-instance-v2",
+ "task_id": "swe-fix-r0012-04",
+ "family": "swe_fix",
+ "behaviour": "act",
+ "round_id": "r0012",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# `reduce_points` function doesn't work when no parameters are provided\n\nI found an issue with the `reduce_points` method in the GPX class. When calling the method without any parameters, it doesn't raise an error as expected.\n\n## Current behavior:\n```python\ngpx = gpxpy.parse(open('test_files/gpx1.gpx'))\ngpx.reduce_points()  # This should raise an error but doesn't\n```\n\nThe function silently returns without doing anything when both `max_points_no` and `min_distance` are None.\n\n## Expected behavior:\nAccording to the documentation and previous behavior, the function should raise a `ValueError` with the message \"Either max_point_no or min_distance must be supplied\" when both parameters are None.\n\n## Reproduction:\n```python\nimport gpxpy\n\n# Load a GPX file\nwith open('path/to/your/gpx_file.gpx', 'r') as gpx_file:\n    gpx = gpxpy.parse(gpx_file)\n\n# This should raise an error but now just returns silently\ngpx.reduce_points()\n\n# This still works as expected\ngpx.reduce_points(max_points_no=100)\ngpx.reduce_points(min_distance=10)\n```\n\nThis is a regression from previous versions where the function would properly validate that at least one parameter was provided.\n</issue>\n",
+ "fixture": {},
+ "setup_commands": [],
+ "protected_paths": [
+  "setup.py"
+ ],
+ "commands": [],
+ "published": {
+  "predicates": []
+ },
+ "withheld_commitment": "hmac-sha256:c79bc75e76d5bf314e3cf28ed4cddbc22162b7c3e6e723d66d61b0dd7c0c9f41",
+ "image": "swe-task:c7994dfee60ea635",
+ "network": "none",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "workdir": "/testbed",
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "requires_self_check": false
+}

@@ -1,0 +1,181 @@
+{
+ "swe-fix-r0012-04": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "test.py::GPXTests::test_reduce_gpx_file"
+    ]
+   ],
+   "assets_sha256": "84b1284dad823951a1fbbf512547dd5087080a3ebd260ba2e9bfca5fe949b7f4",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "8ee99209cfd9cad37fb3b828d7612945fcd1e573dbf672731d00125f3885cb12",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "tkrajina__gpxpy.09fc46b3.lm_rewrite__mkmq07zn",
+   "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3"
+  }
+ },
+ "swe-fix-r0012-05": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/parts/test_settings.py::DescribeSettingsPart::it_constructs_a_default_settings_part_to_help"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/parts/test_settings.py::DescribeSettingsPart::it_provides_access_to_its_settings"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_blkcntnr.py::DescribeBlockItemContainer::it_can_iterate_its_inner_content"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_package.py::DescribePackage::it_gathers_package_image_parts_after_unmarshalling"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_section.py::DescribeSection::it_can_iterate_its_inner_content"
+    ]
+   ],
+   "assets_sha256": "c57bdacc1d4c198aa7bbbfbb3f4f36dc41b1a7c1c8e98d96842e340593f079b5",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "df1de8be0fd29c0c299aaa2d9a41f62fb3c4435d235e7aac2c0e942ff7627606",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "python-openxml__python-docx.0cf6d71f.combine_file__lychidet",
+   "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f"
+  }
+ },
+ "swe-fix-r0012-10": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_tabstops.py::DescribeTabStops::it_can_add_a_tab_stop[add_tab_fixture1]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_tabstops.py::DescribeTabStops::it_can_get_a_tab_stop_by_index[index_fixture1]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_tabstops.py::DescribeTabStops::it_can_get_a_tab_stop_by_index[index_fixture2]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_tabstops.py::DescribeTabStops::it_knows_its_length[len_fixture1]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/text/test_tabstops.py::DescribeTabStops::it_raises_on_indexed_access_when_empty"
+    ]
+   ],
+   "assets_sha256": "bd69cbf3c467dfc6c0e59691caa00ccd53bb9d1174829056bd16f977d3cf0718",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "c0d53c8c996e5cd3fdf2049cc10b86e225f9f56ac713b12146a8a085c70c3063",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "python-openxml__python-docx.0cf6d71f.combine_file__zrhaslff",
+   "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f"
+  }
+ },
+ "swe-fix-r0012-14": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_php"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_python"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_format.py::TestOutputFormat::test_python_multiple_statements"
+    ]
+   ],
+   "assets_sha256": "16923ff7ea8684aa39e2c57109d8029e0199c1090856e158e6c69caedc872892",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "a1207b88a6ba21f9936db54c172a168fb2840e71dcf0ceb783002bb25bd2310d",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "andialbrecht__sqlparse.e57923b3.func_basic__4ud5my8w",
+   "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3"
+  }
+ },
+ "swe-fix-r0012-18": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_builder.py::FromToLineNoTest::test_for_while_lineno"
+    ]
+   ],
+   "assets_sha256": "5b1f517f20a4207addb497f1657d1d5420f2fe911de725b16dbf8ed23ce04a11",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "9f2010b56fbccebec31fd62064bc9dd1469f61d901839b581802e03497d18f2d",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__izqrok37",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0012-19": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_modutils.py::GetModuleFilesTest::test_get_module_files_2"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_modutils.py::GetSourceFileTest::test_pyi"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_modutils.py::GetSourceFileTest::test_pyi_preferred"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_modutils.py::ModuleInPathTest::test_success"
+    ]
+   ],
+   "assets_sha256": "a568147fab3a8f0193f417410dff70a5bc99fb3e43b9acfebeb83cedb310386e",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "5fa7af02e928568766d2c88312c783d432e83a2e96042f650190afed87c42f6f",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.pr_2182",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ }
+}
