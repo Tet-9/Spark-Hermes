@@ -1,8 +1,8 @@
 {
  "schema": "sh-live-v3",
- "updated": 1790331577.895412,
+ "updated": 1790331681.2286267,
  "round_id": "r0014",
- "stage": "window",
+ "stage": "evaluate",
  "stages": [
   "open",
   "window",
@@ -24,6 +24,10 @@
   {
    "stage": "open",
    "t": 1790324471.6231465
+  },
+  {
+   "stage": "window",
+   "t": 1790331671.2240663
   }
  ],
  "window": {
@@ -123,9 +127,50 @@
  },
  "last_round": "r0013",
  "tasks": 6,
- "active": {},
+ "active": {
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": {
+   "pr": 246,
+   "head": "e6dc1918d2808134034b9aee4dbb2075a92fd960",
+   "bundle_sha256": "05895823a1e259fcb316894e389716b3099be45faf5d6433803c0e9dd6e7acfc",
+   "incumbent": true,
+   "was_incumbent": false,
+   "defense": true,
+   "github": "kaivaryn"
+  },
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": {
+   "pr": 254,
+   "head": "d1cec59e392e61888cb19a7626b7a0c3ec736380",
+   "bundle_sha256": "623288e014accfc0badda29b4d6600bc5af5b00cbae64042da2435cbe23d84b4",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "harrythomasben"
+  },
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": {
+   "pr": 255,
+   "head": "86fac66023d921cc0bc29bdb0f6a1efacb21e166",
+   "bundle_sha256": "4ac99bec15244d6f71f4faef07fff7ae7a51d828584de76bd460d4aeb9354181",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "dato-bitar"
+  },
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": {
+   "pr": 256,
+   "head": "3f9eecac586b7c1f7e6260948d376129ff94f684",
+   "bundle_sha256": "d6562eab841bfc9e34da23b3c8c53f51cef155b720207201f74c401a1cbb0a54",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "kaivexa"
+  }
+ },
  "rejected": {},
- "progress": {},
+ "progress": {
+  "done": 0,
+  "total": 0,
+  "by_surface": {}
+ },
  "crown": null,
  "scores": null,
  "queue": [
