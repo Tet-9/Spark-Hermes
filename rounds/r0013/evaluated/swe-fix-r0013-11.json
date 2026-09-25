@@ -1,0 +1,29 @@
+{
+ "schema": "sh-instance-v2",
+ "task_id": "swe-fix-r0013-11",
+ "family": "swe_fix",
+ "behaviour": "act",
+ "round_id": "r0013",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nPolyline simplification algorithm produces incorrect results\n\nDescription\n\nI've been using the `simplify_polyline` function in gpxpy to reduce the number of points in my GPS tracks, but I noticed it's not working correctly. The function is supposed to implement the Ramer-Douglas-Peucker algorithm, but it seems to be producing incorrect results.\n\nHere's a simple reproduction case:\n\n```python\nfrom gpxpy.geo import Location, simplify_polyline\n\n# Create a simple polyline with 3 points\npoints = [\n    Location(latitude=0, longitude=0),\n    Location(latitude=1, longitude=1),  # This point should be kept as it's far from the line\n    Location(latitude=2, longitude=0)\n]\n\n# Simplify with a small max_distance\nsimplified = simplify_polyline(points, max_distance=0.1)\n\n# This should keep all points since the middle point is far from the line\n# between the first and last points\nprint(f\"Original points: {len(points)}\")\nprint(f\"Simplified points: {len(simplified)}\")\nprint(simplified)\n```\n\nExpected behavior: The middle point should be kept since it's far from the line between the first and last points.\n\nActual behavior: The simplification algorithm incorrectly removes points that should be kept, resulting in a polyline that doesn't accurately represent the original shape.\n\nI think there might be issues with how the line equation coefficients are calculated or how the distance from a point to a line is determined. The algorithm seems to be making incorrect decisions about which points to keep and which to discard.\n</issue>\n",
+ "fixture": {},
+ "setup_commands": [],
+ "protected_paths": [
+  "setup.py"
+ ],
+ "commands": [],
+ "published": {
+  "predicates": []
+ },
+ "withheld_commitment": "hmac-sha256:e28d2050120d569fb16aa0da7dedd92b7b57c7e8878f4d3010e4b81b5ee2c4a0",
+ "image": "swe-task:d5018d74196f577a",
+ "network": "none",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "workdir": "/testbed",
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "requires_self_check": false
+}
