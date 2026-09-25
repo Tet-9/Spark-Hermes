@@ -1,8 +1,8 @@
 {
  "schema": "sh-live-v3",
- "updated": 1790302349.2672005,
+ "updated": 1790302965.3952265,
  "round_id": "r0012",
- "stage": "window",
+ "stage": "evaluate",
  "stages": [
   "open",
   "window",
@@ -24,6 +24,10 @@
   {
    "stage": "open",
    "t": 1790295755.7948847
+  },
+  {
+   "stage": "window",
+   "t": 1790302955.4095104
   }
  ],
  "window": {
@@ -130,9 +134,59 @@
  },
  "last_round": "r0011",
  "tasks": 6,
- "active": {},
+ "active": {
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": {
+   "pr": 246,
+   "head": "8b059d31a7ac95ecab054ef086e7424b387402fe",
+   "bundle_sha256": "05895823a1e259fcb316894e389716b3099be45faf5d6433803c0e9dd6e7acfc",
+   "incumbent": true,
+   "was_incumbent": false,
+   "defense": true,
+   "github": "kaivaryn"
+  },
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": {
+   "pr": 247,
+   "head": "5bca4bcb9de46fadf6a3350ecf954b7aa71e15a9",
+   "bundle_sha256": "86e50c3204d1241ec56221aa9c0aa220e3830c436e63bfffdae5b8b5e75d45ee",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "kaivexa"
+  },
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": {
+   "pr": 248,
+   "head": "247e2e3560173460a6bdcc646ef118b38ac18234",
+   "bundle_sha256": "4815bc6ab143fd8f7c5b72203d5e0e09a9426cdd57f3a073c30997ecacf27e2c",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "Tet-9"
+  },
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": {
+   "pr": 249,
+   "head": "8f9bab80ce8ab1e2ed23458a8c22898316b6d1e5",
+   "bundle_sha256": "54d6f4e8b70dad30765c9d1b4b3efce28e807166c7f2d3f91dced0d51b1cd90d",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "dato-bitar"
+  },
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": {
+   "pr": 245,
+   "head": "782781441364e4dd5d690d4c1152ecedb138be1a",
+   "bundle_sha256": "6012741bc2a02d5246f78fbbe3c75cd41778b8c91d2555b0164975823a462330",
+   "incumbent": false,
+   "was_incumbent": false,
+   "defense": false,
+   "github": "harrythomasben"
+  }
+ },
  "rejected": {},
- "progress": {},
+ "progress": {
+  "done": 0,
+  "total": 0,
+  "by_surface": {}
+ },
  "crown": null,
  "scores": null,
  "queue": [
