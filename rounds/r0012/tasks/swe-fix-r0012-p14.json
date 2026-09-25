@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p14",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nThere seems to be an issue with the handling of SQL keywords in certain parsing scenarios. Specifically, when using the `FROM AS` syntax, the parser does not correctly identify the keywords, leading to unexpected tokenization results.\n\nTo reproduce the issue, consider the following example:\n\n```python\nimport sqlparse\nfrom sqlparse.tokens import Keyword as T_Keyword\n\n# Parse a simple SQL statement\nparsed = sqlparse.parse('FROM AS foo')[0]\n\n# Check the token types\nprint('Token count:', len(parsed.tokens))\nprint('First token type:', parsed.tokens[0].ttype)\nprint('Third token type:', parsed.tokens[2].ttype)\n```\n\nExpected behavior:\n- The first token should be identified as a keyword.\n- The third token should also be identified as a keyword.\n\nActual behavior:\n- The token types are not as expected, which can lead to incorrect parsing and potential downstream issues.\n\nThis behavior is particularly problematic when dealing with SQL statements that rely on precise keyword identification. It would be helpful to review the logic around keyword handling to ensure consistent and accurate parsing.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "andialbrecht__sqlparse.e57923b3.lm_rewrite__0uc3v1lz",
+  "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3",
+  "fail_to_pass": [
+   "tests/test_format.py::TestFormat::test_strip_comments_preserves_whitespace",
+   "tests/test_regressions.py::test_dont_alias_keywords"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

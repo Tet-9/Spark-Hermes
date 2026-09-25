@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p05",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nXML parsing fails when string starts with '<?xml'\n\n#### Description\n\nWhen parsing XML strings that start with '<?xml', the parser incorrectly strips the first 5 characters, causing malformed XML and parsing errors.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom docx.oxml.parser import parse_xml\n\n# This should work but fails\nxml_with_declaration = '<?xml version=\"1.0\" standalone=\"yes\"?><foo><bar>test</bar></foo>'\nparse_xml(xml_with_declaration)\n```\n\nThe above code raises an error because the parser removes the first 5 characters ('<?xml') from any string starting with '<?xml', resulting in malformed XML like ` version=\"1.0\" standalone=\"yes\"?><foo><bar>test</bar></foo>`.\n\n#### Expected Behavior\n\nXML strings with proper XML declarations should parse correctly without modification.\n\n#### Actual Behavior\n\nThe parser strips the first 5 characters from any string starting with '<?xml', breaking valid XML declarations and causing parsing failures.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.func_basic__ehw8k8qc",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/oxml/test__init__.py::DescribeParseXml::it_accepts_unicode_providing_there_is_no_encoding_declaration"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

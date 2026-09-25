@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p10",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nText wrapping breaks return wrong newline character\n\n#### Description\n\nWhen working with Word documents that contain text wrapping breaks, the text extraction is returning incorrect newline characters. Text wrapping breaks should not produce newlines in the extracted text, but regular line breaks should.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom docx import Document\nfrom docx.oxml.text.run import CT_Br\n\n# Create a document with text wrapping break\ndoc = Document()\nparagraph = doc.add_paragraph()\nrun = paragraph.add_run(\"Hello\")\n\n# Add a text wrapping break (should not produce newline in text)\nbr_element = CT_Br()\nbr_element.type = \"textWrapping\"\nprint(f\"Text wrapping break text: '{br_element.text}'\")  # Should be empty string\nprint(f\"Expected: ''\")\n\n# Add a regular break (should produce newline in text)  \nbr_element2 = CT_Br()\nbr_element2.type = None  # or any non-textWrapping type\nprint(f\"Regular break text: '{br_element2.text}'\")  # Should be newline\nprint(f\"Expected: '\\\\n'\")\n```\n\nThe text extraction from runs containing text wrapping breaks is producing newlines when it shouldn't, and regular breaks are not producing newlines when they should.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.func_basic__yxha4bw3",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/oxml/text/test_run.py::DescribeCT_R::it_can_assemble_the_text_in_the_run",
+   "tests/test_table.py::Describe_Cell::it_knows_what_text_it_contains[w:tc/w:p/w:r/(w:t\"fo\",w:tab,w:t\"ob\",w:br,w:t\"ar\",w:br)-fo\\tob\\nar\\n]",
+   "tests/text/test_paragraph.py::DescribeParagraph::it_can_replace_the_text_it_contains"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

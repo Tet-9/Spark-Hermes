@@ -1,0 +1,34 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p04",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nGPX fields not serialized to XML when value is zero\n\nWhen GPX fields have a value of zero (0), they are not being serialized to XML output. This affects latitude, longitude, elevation, and other numeric fields.\n\n#### Steps/Code to Reproduce\n\n```python\nimport gpxpy\n\n# Create a GPX track with a point at coordinates (0, 0) with elevation 0\ngpx = gpxpy.GPX()\ntrack = gpxpy.GPXTrack()\ngpx.tracks.append(track)\nsegment = gpxpy.GPXTrackSegment()\ntrack.segments.append(segment)\nsegment.points.append(gpxpy.GPXTrackPoint(0, 0, elevation=0))\n\n# Generate XML\nxml = gpx.to_xml()\nprint(xml)\n\n# Parse the XML back\ngpx2 = gpxpy.parse(xml)\nprint(f\"Original elevation: {gpx.tracks[0].segments[0].points[0].elevation}\")\nprint(f\"Parsed elevation: {gpx2.tracks[0].segments[0].points[0].elevation}\")\n```\n\nExpected: The elevation should remain 0 after parsing\nActual: The elevation becomes None after parsing because the zero value was not serialized to XML\n\nThis also affects other numeric fields like dilution values, coordinates at zero longitude/latitude, and timestamps with microseconds.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tkrajina__gpxpy.09fc46b3.func_pm_ctrl_shuffle__l00om19e",
+  "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3",
+  "fail_to_pass": [
+   "test.py::GPXTests::test_10_to_11_conversion",
+   "test.py::GPXTests::test_dilutions",
+   "test.py::GPXTests::test_gpx_10_fields",
+   "test.py::GPXTests::test_gpx_11_fields",
+   "test.py::GPXTests::test_large_float_values",
+   "test.py::GPXTests::test_microsecond",
+   "test.py::GPXTests::test_name_comment_and_symbol",
+   "test.py::GPXTests::test_timezone_from_timestamp",
+   "test.py::GPXTests::test_xml_chars_encode_decode",
+   "test.py::GPXTests::test_zero_latlng"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

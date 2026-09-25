@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p19",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nException instance attributes not working correctly after recent changes\n\n#### Description\n\nException instances are not returning the correct attributes when accessed. The special attributes like `name`, `path`, `text`, `strerror`, and `object` are not being resolved properly.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\n# ImportError attributes\ncode = '''\ntry:\n    raise ImportError(\"a\")\nexcept ImportError as err:\n   err.name\n   err.path\n'''\nast_nodes = astroid.extract_node(code)\nfor node in ast_nodes:\n    inferred = next(node.infer())\n    print(f\"Expected: '', Got: {inferred.value}\")\n\n# SyntaxError attributes  \ncode = '''\ntry:\n    x[42]\nexcept SyntaxError as err:\n   err.text\n'''\nast_node = astroid.extract_node(code)\ninferred = next(ast_node.infer())\nprint(f\"SyntaxError.text inferred: {inferred}\")\n\n# OSError attributes\ncode = '''\ntry:\n    1/0\nexcept OSError as exc:\n    exc.strerror\n'''\nnode = astroid.extract_node(code)\ninferred = next(node.infer())\nstrerror = next(inferred.igetattr('strerror'))\nprint(f\"OSError.strerror: {strerror.value}\")\n```\n\nThe exception attributes are not being inferred correctly and returning unexpected values instead of the proper default empty strings or expected types.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.combine_file__g51hcpao",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/brain/test_brain.py::TestFunctoolsPartial::test_inferred_partial_function_calls",
+   "tests/brain/test_brain.py::test_oserror_model",
+   "tests/test_object_model.py::ExceptionModelTest::test_import_error",
+   "tests/test_object_model.py::ExceptionModelTest::test_syntax_error",
+   "tests/test_object_model.py::ExceptionModelTest::test_unicodedecodeerror"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

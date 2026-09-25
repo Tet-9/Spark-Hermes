@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0012-p18",
+ "round_id": "r0012",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nMetaclass `__call__` method not being invoked during class instantiation\n\n#### Description\n\nWhen a metaclass defines a custom `__call__` method, it should take precedence over the default type instantiation behavior. However, the custom `__call__` method is being ignored and the class is being instantiated normally instead.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\ncode = '''\nclass _Meta(type):\n    def __call__(cls):\n        return 1\n\nclass Clazz(metaclass=_Meta):\n    def __call__(self):\n        return 5.5\n\nClazz()\n'''\n\nmodule = astroid.parse(code)\ncall_node = module.body[-1].value  # The Clazz() call\nresult = list(call_node.infer())[0]\nprint(f\"Expected: 1, Got: {result}\")\n```\n\nThe expected behavior is that `Clazz()` should return `1` (from the metaclass `__call__` method), but instead it returns an instance of `Clazz`.\n\nThis affects static analysis tools that rely on astroid for inference, as they may incorrectly analyze code that uses metaclasses with custom `__call__` methods.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_remove_cond__nsyfit6r",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_inference.py::InferenceTest::test_metaclass_custom_dunder_call"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
