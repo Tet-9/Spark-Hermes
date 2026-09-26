@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0020-p16",
+ "round_id": "r0020",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nOAuth2 Client token placement broken for URI_QUERY and BODY\n\n#### Description\n\nWhen using OAuth2 Client with token placement set to `URI_QUERY` or `BODY`, the bearer token is being added to the wrong location. The token that should be added to the URI query parameters is instead being added to the request body, and the token that should be added to the request body is instead being added to the headers.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom oauthlib.oauth2 import Client\nfrom oauthlib.oauth2.rfc6749 import URI_QUERY, BODY\n\n# Create client with access token\nclient = Client('client_id', access_token='test_token')\n\n# Test URI_QUERY placement - token should be added to URI\nuri, headers, body = client.add_token(\n    'https://example.com/api', \n    body='original_body', \n    headers={'Content-Type': 'application/json'}, \n    token_placement=URI_QUERY\n)\nprint(\"URI:\", uri)  # Expected: https://example.com/api?access_token=test_token\nprint(\"Body:\", body)  # Expected: original_body\n\n# Test BODY placement - token should be added to body\nuri, headers, body = client.add_token(\n    'https://example.com/api', \n    body='original_body', \n    headers={'Content-Type': 'application/json'}, \n    token_placement=BODY\n)\nprint(\"URI:\", uri)  # Expected: https://example.com/api\nprint(\"Headers:\", headers)  # Expected: {'Content-Type': 'application/json'}\n```\n\nThe token placement is completely mixed up - URI_QUERY placement puts the token in the body instead of the URI, and BODY placement puts the token in headers instead of the body.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "oauthlib__oauthlib.1fd52536.func_basic__yz7ard2c",
+  "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536",
+  "fail_to_pass": [
+   "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_add_bearer_token"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

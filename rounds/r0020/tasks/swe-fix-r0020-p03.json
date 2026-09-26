@@ -1,0 +1,30 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0020-p03",
+ "round_id": "r0020",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nNamedExpr target and value attributes swapped\n\n#### Description\n\nWhen creating a NamedExpr (walrus operator `:=`) node, the target and value attributes are incorrectly assigned. The target should contain the variable being assigned to, but it contains the value instead, and vice versa.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\ncode = \"\"\"\nif (a := 1):\n    pass\n\"\"\"\n\nmodule = astroid.parse(code)\nnamed_expr = module.body[0].test\n\nprint(f\"Target: {named_expr.target}\")  # Should be AssignName 'a'\nprint(f\"Value: {named_expr.value}\")    # Should be Const 1\nprint(f\"Target name: {named_expr.target.name}\")  # Should be 'a'\nprint(f\"Value value: {named_expr.value.value}\")  # Should be 1\n```\n\nExpected output:\n```\nTarget: <AssignName.a l.2 at 0x...>\nValue: <Const.int l.2 at 0x...>\nTarget name: a\nValue value: 1\n```\n\nActual output:\n```\nTarget: <Const.int l.2 at 0x...>\nValue: <AssignName.a l.2 at 0x...>\nTarget name: AttributeError: 'Const' object has no attribute 'name'\nValue value: AttributeError: 'AssignName' object has no attribute 'value'\n```\n\nThis affects any code that relies on the correct assignment of target and value in walrus operator expressions.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__rg11tppd",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_nodes.py::TestNamedExprNode::test_frame",
+   "tests/test_nodes.py::TestNamedExprNode::test_scope",
+   "tests/test_nodes.py::test_assignment_expression",
+   "tests/test_nodes_lineno.py::TestLinenoColOffset::test_end_lineno_if",
+   "tests/test_protocols.py::test_named_expr_inference",
+   "tests/test_regrtest.py::NonRegressionTests::test_filter_stmts_nested_if"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

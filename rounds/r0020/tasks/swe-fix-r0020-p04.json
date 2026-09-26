@@ -1,0 +1,30 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0020-p04",
+ "round_id": "r0020",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nNamedTuple Field Inference Fails with Custom Field Names\n\nDescription\n\nWe encountered an issue with NamedTuple field inference when using custom field names. The problem arises when attempting to infer fields from NamedTuple instances created with either the `collections.namedtuple` or `typing.NamedTuple` modules.\n\nThe specific scenario involves defining a NamedTuple with a list of fields, such as:\n\n```python\nfrom collections import namedtuple\n\nname = \"X\"\nfields = [\"a\", \"b\", \"c\"]\nclass X(namedtuple(name, fields)):\n    pass\n```\n\nor using `typing.NamedTuple`:\n\n```python\nfrom typing import NamedTuple\n\nclass X(NamedTuple(\"X\", [(\"a\", int), (\"b\", str), (\"c\", bytes)])):\n    pass\n```\n\nIn both cases, the inference mechanism fails to correctly identify and set the instance attributes `a`, `b`, and `c`. This results in unexpected behavior when accessing these attributes, as they are not recognized as part of the NamedTuple's structure.\n\nSteps to Reproduce:\n\n1. Define a NamedTuple using either `collections.namedtuple` or `typing.NamedTuple` with a list of fields.\n2. Attempt to access the fields as instance attributes.\n3. Observe that the fields are not correctly inferred, leading to assertion errors or unexpected results.\n\nThis issue seems to be related to the recent changes in the `_get_namedtuple_fields` function, which may not be handling the field inference correctly. Further investigation is needed to ensure that NamedTuple fields are properly recognized and accessible as expected.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__1ycof0xr",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_base",
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_inference",
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_instance_attrs",
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_simple",
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_uninferable_member",
+   "tests/brain/test_named_tuple.py::NamedTupleTest::test_namedtuple_inference"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

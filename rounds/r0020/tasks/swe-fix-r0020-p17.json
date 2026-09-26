@@ -1,0 +1,27 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0020-p17",
+ "round_id": "r0020",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nlast_child() method returns wrong element for nodes with lists/tuples\n\n#### Description\n\nThe `last_child()` method in NodeNG is not working correctly when dealing with nodes that have list or tuple attributes. Instead of returning the last element from these collections, it's returning the first element, and in some cases returning a new NodeNG instance instead of None.\n\n#### Steps/Code to Reproduce\n\n```python\nimport astroid\n\n# Parse a simple function with multiple statements\ncode = '''\ndef test() -> bytes:\n    pass\n    pass\n    return\n'''\n\nfunc = astroid.parse(code).body[0]\nlast_child = func.last_child()\n\n# Expected: should return the Return node (last statement)\n# Actual: returns the first statement instead\nprint(f\"Last child type: {type(last_child)}\")\nprint(f\"Last child: {last_child}\")\n```\n\nThe issue affects various node types that contain lists of child nodes, causing incorrect traversal behavior in AST analysis tools.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_basic__wgcj370g",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_nodes.py::ArgumentsNodeTC::test_linenumbering",
+   "tests/test_nodes.py::IfNodeTest::test_block_range",
+   "tests/test_scoped_nodes.py::FunctionNodeTest::test_return_annotation_is_not_the_last"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

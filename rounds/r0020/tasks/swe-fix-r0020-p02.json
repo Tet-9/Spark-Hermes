@@ -1,0 +1,31 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0020-p02",
+ "round_id": "r0020",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nSQL statement splitting broken for stored procedures and functions\n\n#### Description\n\nSQL statement splitting is not working correctly for stored procedures and functions. The splitter incorrectly breaks apart statements that should be treated as single units, particularly when they contain BEGIN/END blocks, DECLARE statements, and other control flow constructs.\n\n#### Steps/Code to Reproduce\n\n```python\nimport sqlparse\n\n# This should be split into 2 statements, but currently splits incorrectly\nsql = '''   CREATE FUNCTION a(x VARCHAR(20)) RETURNS VARCHAR(20)\n                BEGIN\n                 DECLARE y VARCHAR(20);\n                 RETURN x;\n                END;\n                SELECT * FROM a.b;'''\n\nstatements = sqlparse.split(sql)\nprint(f\"Expected: 2 statements, Got: {len(statements)} statements\")\n\n# This should remain as 1 statement\np_sql = '''CREATE OR REPLACE RULE ruled_tab_2rules AS ON INSERT\nTO public.ruled_tab\nDO instead (\nselect 1;\nselect 2;\n);'''\n\nstatements2 = sqlparse.split(p_sql)\nprint(f\"Expected: 1 statement, Got: {len(statements2)} statements\")\n```\n\nThe issue affects various SQL constructs including:\n- CREATE FUNCTION with BEGIN/END blocks\n- CREATE PROCEDURE with DECLARE statements  \n- MySQL handlers with FOR loops\n- PostgreSQL functions with complex control flow\n\nThis makes it difficult to properly parse and process SQL files containing stored procedures and functions.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "andialbrecht__sqlparse.e57923b3.func_pm_remove_cond__zkz31yhm",
+  "environment": "jyangballin/swesmith.x86_64.andialbrecht_1776_sqlparse.e57923b3",
+  "fail_to_pass": [
+   "tests/test_regressions.py::test_issue193_splitting_function",
+   "tests/test_regressions.py::test_issue194_splitting_function",
+   "tests/test_regressions.py::test_issue485_split_multi",
+   "tests/test_split.py::test_split_casewhen_procedure",
+   "tests/test_split.py::test_split_create_function[function.sql]",
+   "tests/test_split.py::test_split_mysql_handler_for",
+   "tests/test_split.py::test_split_strip_semicolon_procedure"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
