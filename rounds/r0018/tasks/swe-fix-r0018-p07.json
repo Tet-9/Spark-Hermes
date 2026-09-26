@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0018-p07",
+ "round_id": "r0018",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# typing.NamedTuple fails with non-literal arguments\n\n## Description\n\nI found an issue with `typing.NamedTuple` when using non-literal arguments. When trying to create a NamedTuple with variables instead of literals, it doesn't work correctly.\n\n## Steps to Reproduce\n\n```python\nfrom typing import NamedTuple\n\n# This works fine\nPerson = NamedTuple(\"Person\", [(\"name\", str), (\"age\", int)])\n\n# But using variables doesn't work\nname = \"X\"\nfields = [(\"a\", int), (\"b\", str), (\"c\", bytes)]\nMyTuple = NamedTuple(name, fields)  # This fails\n\n# Also fails with empty field list\nBar = NamedTuple(\"bar\", [])\nBar()  # This doesn't work either\n```\n\n## Expected Results\n\nThe NamedTuple should be created successfully regardless of whether the arguments are literals or variables. Both examples should work the same way.\n\n## Actual Results\n\nWhen using variables instead of literals for the typename and fields arguments, the NamedTuple creation fails. Similarly, creating a NamedTuple with an empty field list also fails.\n\n## Environment\n- Python 3.10\n- Latest version of typing module\n\nI tried this in a simple script and it doesn't work as expected. The same code works fine when using collections.namedtuple, but fails with typing.NamedTuple.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__p2lstcrg",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/brain/test_brain.py::TypingBrain::test_namedtuple_inference_nonliteral",
+   "tests/brain/test_brain.py::TypingBrain::test_typing_namedtuple_dont_crash_on_no_fields"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0018-p08",
+ "round_id": "r0018",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nSupport for custom meta path finders is broken\n\nDescription\n\nAfter a recent change, astroid no longer supports custom meta path finders. This affects packages that use setuptools PEP 660 editable installs and other packages that rely on custom import hooks.\n\nFor example, when trying to import a package installed via setuptools PEP 660:\n\n```python\nimport example\nimport example.subpackage\n```\n\nThis fails with: `ImportError: No module named example`\n\nThe same issue happens with packages that use custom import hooks like urllib3's six.moves implementation:\n\n```python\nfrom urllib3.packages.six.moves import http_client\n```\n\nThis also fails with an ImportError.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_remove_loop__4rlnfklv",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_modutils.py::test_file_info_from_modpath__SixMetaPathImporter",
+   "tests/test_modutils.py::test_find_setuptools_pep660_editable_install"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

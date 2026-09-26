@@ -1,0 +1,29 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0018-p05",
+ "round_id": "r0018",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nDocument operations failing after recent changes\n\nI'm encountering several issues with document operations that seem to have broken recently. The problems appear to be related to header/footer handling, document saving, and numbering part access.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom docx import Document\nfrom docx.parts.document import DocumentPart\n\n# Create a document and try basic operations\ndoc = Document()\n\n# Try to save the document\ndoc.save('test.docx')  # This fails\n\n# Try to access numbering part\nnumbering = doc._part.numbering_part  # This returns None unexpectedly\n\n# Try to drop a header part\ndoc._part.drop_header_part('rId1')  # This doesn't work for non-h prefixed IDs\n\n# Try to access footer part\nfooter = doc._part.footer_part('rId9')  # This returns wrong part or None\n```\n\nThe save operation seems to be corrupting the filename somehow, the numbering part access is broken and returns None when it should create a new part, header dropping only works for IDs starting with 'h', and footer part access is returning the wrong parts.\n\nThese basic document operations used to work fine but now they're all behaving unexpectedly.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "python-openxml__python-docx.0cf6d71f.combine_file__l7nd4vqa",
+  "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f",
+  "fail_to_pass": [
+   "tests/parts/test_document.py::DescribeDocumentPart::and_it_creates_a_numbering_part_if_not_present",
+   "tests/parts/test_document.py::DescribeDocumentPart::it_can_drop_a_specified_header_part",
+   "tests/parts/test_document.py::DescribeDocumentPart::it_can_save_the_package_to_a_file",
+   "tests/parts/test_document.py::DescribeDocumentPart::it_provides_access_to_a_footer_part_by_rId",
+   "tests/parts/test_document.py::DescribeDocumentPart::it_provides_access_to_the_numbering_part"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

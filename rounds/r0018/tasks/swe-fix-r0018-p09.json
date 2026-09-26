@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0018-p09",
+ "round_id": "r0018",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# ServiceApplicationClient parameters are swapped and JWT encoding is broken\n\nWhile working with the ServiceApplicationClient, I discovered that the client is not working correctly. The JWT token generation is completely broken due to several issues.\n\n## How to reproduce:\n\nCreate a ServiceApplicationClient with the required parameters:\n\n```python\nfrom oauthlib.oauth2 import ServiceApplicationClient\n\n# Create a client with private key, subject, issuer and audience\nclient = ServiceApplicationClient(\n    client_id='my-client-id',\n    private_key='-----BEGIN PRIVATE KEY-----\\n...',\n    subject='user@example.com',\n    issuer='my-app@provider.com',\n    audience='https://provider.com/oauth2/token'\n)\n\n# Try to prepare a request body\nbody = client.prepare_request_body()\n```\n\nThis fails with a cryptic error because:\n1. The private_key and subject parameters are swapped internally\n2. The audience is set to None regardless of what you pass\n3. The issuer and audience claims are swapped in the JWT\n4. The error message when a claim is missing uses division instead of string formatting\n5. The JWT is encoded with HS256 instead of RS256 which is incorrect for private key signing\n\nWhen you try to use this client to authenticate, the token request will fail because the JWT is malformed.\n\nExpected behavior:\n- The private_key and subject should be assigned to the correct attributes\n- The audience should be stored as provided\n- The JWT claims should have the correct values in the correct fields\n- The error message should be properly formatted\n- The JWT should be encoded with RS256 for private key signing\n\nThis is a critical issue for anyone using the ServiceApplicationClient for authentication.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "oauthlib__oauthlib.1fd52536.combine_file__o2muk6gq",
+  "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536",
+  "fail_to_pass": [
+   "tests/oauth2/rfc6749/clients/test_service_application.py::ServiceApplicationClientTest::test_request_body",
+   "tests/oauth2/rfc6749/clients/test_service_application.py::ServiceApplicationClientTest::test_request_body_no_initial_private_key"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

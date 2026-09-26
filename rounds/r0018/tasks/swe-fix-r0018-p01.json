@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0018-p01",
+ "round_id": "r0018",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nSecOC authenticator application fails with bitstruct error for large freshness values\n\n#### Description\n\nWhen applying SecOC authenticator with large freshness values, the function raises a bitstruct.Error indicating the value is out of range for the specified bit width.\n\n#### Steps/Code to Reproduce\n\n```python\nimport cantools\nfrom cantools.autosar.secoc import SnakeOilAuthenticator\n\ndb = cantools.db.load_file('tests/files/arxml/system-4.2.arxml')\ndbmsg = db.get_message_by_name('Message3')\nencoded_raw = bytes([0] * dbmsg.length)\nsnake_auth = SnakeOilAuthenticator(secret='Psst! Top secretion!')\n\n# This should work but raises bitstruct.Error\nencoded = cantools.autosar.apply_authenticator(encoded_raw, dbmsg, snake_auth, 52428)\n```\n\nThe error occurs when trying to pack a freshness value that exceeds the expected range for the configured bit width. The freshness value 52428 should be truncated to fit within the 6-bit freshness_tx_bit_length, but instead causes:\n\n```\nbitstruct.Error: \"u6\" requires 0 <= integer <= 63 (got 52479)\n```\n\nExpected behavior: The freshness value should be properly truncated to fit within the specified bit length and the authenticator should be applied successfully.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__fa3mgt9i",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_autosar.py::CanToolsAutosarTest::test_autosar4_secoc"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
