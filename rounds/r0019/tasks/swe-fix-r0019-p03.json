@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p03",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nNameError when using response_type=none in OAuth2 authorization flow\n\n#### Description\n\nWhen making an OAuth2 authorization request with `response_type=none`, a `NameError` occurs because the `state` variable is referenced but not defined in the scope.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom oauthlib.oauth2 import WebApplicationServer\n\n# Create a simple OAuth2 server\nserver = WebApplicationServer(None)\n\n# Make an authorization request with response_type=none and state parameter\nuri = 'http://example.com/auth?response_type=none&client_id=test&state=xyz&redirect_uri=http://back.to/me'\n\n# This will raise a NameError\nheaders, body, status_code = server.create_authorization_response(uri, scopes=['read'])\n```\n\nThe error occurs when the authorization flow tries to handle the `response_type=none` case but references an undefined `state` variable.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "oauthlib__oauthlib.1fd52536.func_pm_remove_assign__jzrt10xx",
+  "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536",
+  "fail_to_pass": [
+   "tests/oauth2/rfc6749/test_server.py::AuthorizationEndpointTest::test_none_grant",
+   "tests/openid/connect/core/test_server.py::AuthorizationEndpointTest::test_none_grant"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

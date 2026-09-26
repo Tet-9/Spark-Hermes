@@ -1,0 +1,31 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p04",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nGPX smoothing algorithm causes IndexError when accessing array indices\n\n#### Description\n\nWhen calling the `smooth()` method on GPX track segments, the algorithm fails with an IndexError due to incorrect array index calculations in the smoothing logic.\n\n#### Steps/Code to Reproduce\n\n```python\nimport gpxpy\nimport gpxpy.parser as mod_parser\n\n# Load a GPX file and apply smoothing\nwith open('test_files/track-with-extremes.gpx') as f:\n    parser = mod_parser.GPXParser(f)\ngpx = parser.parse()\n\n# This will raise IndexError\ngpx.smooth(vertical=True, horizontal=True, remove_extremes=True)\n```\n\nThe error also occurs with other smoothing combinations:\n\n```python\n# These also fail\ngpx.smooth(vertical=True, horizontal=False, remove_extremes=True)\ngpx.smooth(vertical=False, horizontal=True, remove_extremes=True)\ngpx.smooth(vertical=True, horizontal=True)\n```\n\n#### Expected Behavior\n\nThe smoothing algorithm should process the track points without raising IndexError and successfully smooth the track data.\n\n#### Actual Behavior\n\nThe method raises `IndexError: list index out of range` when trying to access array elements during the smoothing calculations.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "tkrajina__gpxpy.09fc46b3.func_pm_op_change_const__xenufrev",
+  "environment": "jyangballin/swesmith.x86_64.tkrajina_1776_gpxpy.09fc46b3",
+  "fail_to_pass": [
+   "test.py::GPXTests::test_clone_and_smooth",
+   "test.py::GPXTests::test_horizontal_and_vertical_smooth_remove_extremes",
+   "test.py::GPXTests::test_horizontal_smooth_remove_extremes",
+   "test.py::GPXTests::test_moving_stopped_times",
+   "test.py::GPXTests::test_smooth_without_removing_extreemes_preserves_point_count_2",
+   "test.py::GPXTests::test_smooth_without_removing_extreemes_preserves_point_count_3",
+   "test.py::GPXTests::test_vertical_smooth_remove_extremes"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

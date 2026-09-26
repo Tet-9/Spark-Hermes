@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p02",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n### Description\n\nIt seems there's an issue with pattern matching when using the `MatchClass` node. Specifically, when trying to match classes with both positional and keyword patterns, the expected behavior is not being met. The patterns are not being processed correctly, leading to unexpected results.\n\n### Expected Behavior\n\nThe `MatchClass` node should correctly handle both positional and keyword patterns, allowing for accurate pattern matching as specified in the code.\n\n### How to Reproduce\n\nHere's a minimal example to reproduce the issue:\n\n```python\nimport textwrap\nfrom astroid import builder, nodes\n\ncode = textwrap.dedent('''\n    match x:\n        case Point2D(0, a):\n            pass\n        case Point3D(x=0, y=1, z=b):\n            pass\n''').strip()\n\nnode = builder.extract_node(code)\nprint(node.as_string())\n```\n\nThe expected output should match the input code, but currently, it does not. The `MatchClass` node is not handling the patterns as expected, leading to discrepancies in the output.\n\n### Environment\n\n- Python version: 3.10.16\n- Platform: Linux\n- Relevant library versions: astroid (version used in the test environment)\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__08udf2pp",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_nodes.py::TestPatternMatching::test_match_class"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

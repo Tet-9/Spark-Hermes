@@ -1,0 +1,26 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p09",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nDeprecation decorator fails to validate argument names\n\n#### Description\n\nThe deprecation decorator is not properly validating that deprecated argument names exist in the function signature. This allows invalid argument names to be passed to the decorator without raising an error, which can lead to silent failures where deprecation warnings are not triggered as expected.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom astroid.decorators import deprecate_default_argument_values\n\nclass SomeClass:\n    @deprecate_default_argument_values(name=\"3.2\")\n    def __init__(self, name=None, lineno=42):\n        pass\n    \n    @deprecate_default_argument_values(name=\"3.2\", var=\"3.2\")  \n    def func(self, name=None, var=None, type_annotation=''):\n        pass\n\n# This should work fine\ninstance = SomeClass()\ninstance.func()\n```\n\nThe decorator should validate that the argument names specified in the decorator (like 'name' and 'var') actually exist as parameters in the decorated function. Currently, if you specify an invalid argument name in the decorator, it doesn't raise an error during decoration time, which can cause unexpected behavior when the deprecation logic tries to process non-existent arguments.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_remove_wrapper__bjcfn8vc",
+  "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5",
+  "fail_to_pass": [
+   "tests/test_decorators.py::TestDeprecationDecorators::test_deprecated_default_argument_values_one_arg",
+   "tests/test_decorators.py::TestDeprecationDecorators::test_deprecated_default_argument_values_two_args"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

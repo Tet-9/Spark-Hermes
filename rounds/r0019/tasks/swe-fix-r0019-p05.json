@@ -1,0 +1,25 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p05",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nARXML ECU extract loader fails with \"No ComPduIdRef reference found\" error\n\nWhen loading certain ARXML files using the ECU extract loader, the parser fails with a `ValueError: No ComPduIdRef reference found.` This appears to happen when the ARXML file structure doesn't match the expected reference format.\n\n#### Steps to Reproduce\n\n```python\nimport cantools\n\ndb = cantools.database.Database()\ndb.add_arxml_file('tests/files/arxml/ecu-extract-4.2.arxml')\n```\n\n#### Expected Behavior\n\nThe ARXML file should load successfully and populate the database with the expected messages and signals.\n\n#### Actual Behavior\n\n```\nValueError: No ComPduIdRef reference found.\n```\n\nThe error occurs during the ECU extract loading process when trying to parse reference values from the ARXML structure.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "cantools__cantools.0c6a7871.func_basic__hckb7pnx",
+  "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871",
+  "fail_to_pass": [
+   "tests/test_database.py::CanToolsDatabaseTest::test_ecu_extract_arxml"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}

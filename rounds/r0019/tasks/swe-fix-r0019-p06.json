@@ -1,0 +1,32 @@
+{
+ "schema": "sh-preview-v1",
+ "task_id": "swe-fix-r0019-p06",
+ "round_id": "r0019",
+ "family": "swe_fix",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\nOneOf validator returns None instead of value and ContainsOnly validator returns truncated sequences\n\n#### Description\n\nThe OneOf validator is returning None instead of the validated value, and the ContainsOnly validator is returning truncated sequences (missing the last element).\n\n#### Steps/Code to Reproduce\n\n```python\nfrom marshmallow import validate\n\n# OneOf validator issue\nvalidator = validate.OneOf([1, 2, 3])\nresult = validator(2)\nprint(f\"Expected: 2, Got: {result}\")\n\n# ContainsOnly validator issue  \nvalidator = validate.ContainsOnly([1, 2, 3])\nresult = validator([1, 2])\nprint(f\"Expected: [1, 2], Got: {result}\")\n\nresult = validator(\"ab\")  # with string\nprint(f\"Expected: 'ab', Got: '{result}'\")\n```\n\nExpected output:\n```\nExpected: 2, Got: 2\nExpected: [1, 2], Got: [1, 2]\nExpected: 'ab', Got: 'ab'\n```\n\nActual output:\n```\nExpected: 2, Got: None\nExpected: [1, 2], Got: [1]\nExpected: 'ab', Got: 'a'\n```\n\nThe OneOf validator should return the original value when validation passes, but it's returning None. The ContainsOnly validator should return the complete sequence but it's dropping the last element.\n</issue>\n",
+ "workdir": "/testbed",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "grading": "share of the tests the bug breaks that pass, counted only if no kept test fails",
+ "source": {
+  "dataset": "SWE-bench/SWE-smith",
+  "instance_id": "marshmallow-code__marshmallow.9716fc62.combine_file__5m9xnodp",
+  "environment": "jyangballin/swesmith.x86_64.marshmallow-code_1776_marshmallow.9716fc62",
+  "fail_to_pass": [
+   "tests/test_deserialization.py::TestSchemaDeserialization::test_deserialization_raises_with_errors",
+   "tests/test_deserialization.py::TestSchemaDeserialization::test_deserialization_raises_with_errors_with_multiple_validators",
+   "tests/test_validate.py::test_contains_only_in_string",
+   "tests/test_validate.py::test_contains_only_unhashable_types",
+   "tests/test_validate.py::test_containsonly_in_list",
+   "tests/test_validate.py::test_containsonly_in_tuple",
+   "tests/test_validate.py::test_oneof",
+   "tests/test_validate.py::test_oneof_custom_message"
+  ]
+ },
+ "note": "A practice bug. The round is scored on different, hidden bugs from the same repository."
+}
