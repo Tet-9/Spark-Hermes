@@ -1,0 +1,206 @@
+{
+ "swe-fix-r0018-01": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_two_axes_with_auto_ylabels_and_one_legend"
+    ]
+   ],
+   "assets_sha256": "3871dc39157bc1009413b47ff0890b7ecb1782762563ce163e157f5b7e1d8fcc",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "debbdfa4743b9b72b5ae2cccdc71bd52eb93c274bcc3c3b439585780d75e133a",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.func_basic__vxezr2bg",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ },
+ "swe-fix-r0018-05": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/styles/test_style.py::DescribeParagraphStyle::it_can_change_its_next_paragraph_style[next_set_fixture0]"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/styles/test_style.py::DescribeParagraphStyle::it_can_change_its_next_paragraph_style[next_set_fixture1]"
+    ]
+   ],
+   "assets_sha256": "f7f4255faf9af1f3414110607b03870dde7eb0959cbb155400ba6d7458ce5db5",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "a2c6796c643ed5e371fd42c95ea43985e0a307c425f54ac4b31f3dd08b83d608",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "python-openxml__python-docx.0cf6d71f.lm_rewrite__45j5meax",
+   "environment": "jyangballin/swesmith.x86_64.python-openxml_1776_python-docx.0cf6d71f"
+  }
+ },
+ "swe-fix-r0018-06": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_error_messages"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_ignore_invalid_data"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_ignore_unknown_frameid"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_plot_cantools_decode"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_show_all_errors"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_show_invalid_data"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_show_invalid_syntax"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_plot.py::CanToolsPlotTest::test_show_unknown_frames"
+    ]
+   ],
+   "assets_sha256": "12b796b0dec3d1f3e3fce11cf329d9e648374a4a86d8218946745f08867bf92f",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "e62484de83cf14a391c066a242aed246081a20a6883e653ceba787ef3c3eb37b",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "cantools__cantools.0c6a7871.func_pm_ctrl_invert_if__5ktbi8j7",
+   "environment": "jyangballin/swesmith.x86_64.cantools_1776_cantools.0c6a7871"
+  }
+ },
+ "swe-fix-r0018-07": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_instance_slicing"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_slicing_list"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_slicing_str"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::InferenceTest::test_slicing_tuple"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_inference.py::SliceTest::test_slice"
+    ]
+   ],
+   "assets_sha256": "46380c480866763a238310e4a0f44cd7a513117f45fb99e8d7e90bee235ffae8",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "1f2becd7b74ca424eb490c80371db99aee97b13273c921549a4d28b86fa36601",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.func_pm_ctrl_invert_if__rkzmg83q",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0018-08": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/test_protocols.py::ProtocolTests::test_list_multiplication_with_empty_list_and_overflowing_multiplier"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_protocols.py::ProtocolTests::test_list_multiplication_with_negative_overflowing_multiplier"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_protocols.py::ProtocolTests::test_uninferable_list_multiplication"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/test_protocols.py::ProtocolTests::test_uninferable_list_multiplication_with_multiple_operands"
+    ]
+   ],
+   "assets_sha256": "f1689160bb21029a5c7a9b01ee16cd830e1172020f50517857e067f390317843",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "e03f8b4281bb24a2cf39286676263c82fa5e853f0ecea434e58df0595ed1f50c",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "pylint-dev__astroid.b114f6b5.pr_2229",
+   "environment": "jyangballin/swesmith.x86_64.pylint-dev_1776_astroid.b114f6b5"
+  }
+ },
+ "swe-fix-r0018-09": {
+  "withheld": {
+   "predicates": [
+    [
+     "custom",
+     "swe_test",
+     "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_add_bearer_token"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_add_mac_token"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_prepare_refresh_token_request"
+    ],
+    [
+     "custom",
+     "swe_test",
+     "tests/oauth2/rfc6749/clients/test_base.py::ClientTest::test_prepare_token_request"
+    ]
+   ],
+   "assets_sha256": "f139013ce760caf9fdd09f3aaadca30ef23b06c0914c8c3e20fe50cd804b3f75",
+   "checks_sha256": "403d3351fb14b2b302689c398daf0d6d3d2c240cf4f57276e5184634be68f0b2"
+  },
+  "salt": "8c47fbb2caf298af08c6fbe5ccd5c94a34043d6a7406a5370581a5cf45640689",
+  "source": {
+   "dataset": "SWE-bench/SWE-smith",
+   "instance_id": "oauthlib__oauthlib.1fd52536.combine_file__r5mt1rid",
+   "environment": "jyangballin/swesmith.x86_64.oauthlib_1776_oauthlib.1fd52536"
+  }
+ }
+}

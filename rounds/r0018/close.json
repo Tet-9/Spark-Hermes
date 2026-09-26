@@ -1,0 +1,175 @@
+{
+ "schema": "sh-round-close-v3",
+ "scoring": "sh-scoring-v3 (credit)",
+ "round_id": "r0018",
+ "era": "e0",
+ "tasks": [
+  "swe-fix-r0018-01",
+  "swe-fix-r0018-05",
+  "swe-fix-r0018-06",
+  "swe-fix-r0018-07",
+  "swe-fix-r0018-08",
+  "swe-fix-r0018-09"
+ ],
+ "episodes": 288,
+ "family_stats": {
+  "swe_fix": {
+   "schema": "sh-family-stats-v2",
+   "family": "swe_fix",
+   "era": "e0",
+   "window": [
+    "r0011",
+    "r0012",
+    "r0013",
+    "r0014",
+    "r0015",
+    "r0016",
+    "r0017",
+    "r0018"
+   ],
+   "null": {
+    "n": 48,
+    "successes": 5,
+    "p": 0.10416666666666667,
+    "mean_credit": 0.1644,
+    "wilson": [
+     0.0453,
+     0.2217
+    ],
+    "efficiency": {
+     "api_calls": {
+      "median": 24.0,
+      "p25": 15.0,
+      "n": 5
+     },
+     "tool_calls": {
+      "median": 34.0,
+      "p25": 16.0,
+      "n": 5
+     }
+    }
+   },
+   "canon": {
+    "n": 6,
+    "successes": 0,
+    "p": 0.0,
+    "mean_credit": 0.0,
+    "wilson": [
+     0.0,
+     0.3903
+    ],
+    "efficiency": {},
+    "delta_c": -0.1644,
+    "delta_e": {},
+    "delta_e_paired_instances": 0
+   },
+   "label": "frontier",
+   "partial_rate": 0.0185,
+   "in_rotation": true,
+   "retirement": null
+  }
+ },
+ "scores": {
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": {
+   "hotkey": "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh",
+   "n": 48,
+   "score": 0.099206,
+   "delta_c": 0.04604247485569485,
+   "delta_e": {
+    "api_calls": -0.022990102665373102,
+    "tool_calls": 0.2177494451176114
+   },
+   "gate": true,
+   "se": 0.041534,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.099206
+  },
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": {
+   "hotkey": "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ",
+   "n": 48,
+   "score": 0.063368,
+   "delta_c": 0.016234578169842438,
+   "delta_e": {
+    "api_calls": 0.042822496742767,
+    "tool_calls": 0.29509367790544283
+   },
+   "gate": true,
+   "se": 0.036823,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.063368
+  },
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": {
+   "hotkey": "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6",
+   "n": 48,
+   "score": 0.197049,
+   "delta_c": 0.12336958477320316,
+   "delta_e": {
+    "api_calls": 0.030963758892700588,
+    "tool_calls": 0.30728961095900137
+   },
+   "gate": true,
+   "se": 0.057562,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.197049
+  },
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": {
+   "hotkey": "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb",
+   "n": 48,
+   "score": 0.072297,
+   "delta_c": 0.009835567427265685,
+   "delta_e": {
+    "api_calls": -0.12371694566415437,
+    "tool_calls": 0.2032950872879225
+   },
+   "gate": true,
+   "se": 0.048798,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.072297
+  },
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": {
+   "hotkey": "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg",
+   "n": 42,
+   "score": 0.049206,
+   "delta_c": 0.0,
+   "delta_e": {
+    "api_calls": -0.3550929573359412,
+    "tool_calls": -0.17030911199073595
+   },
+   "gate": true,
+   "se": 0.05584,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 42,
+   "mean_d": 0.049206
+  }
+ },
+ "weights": {
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": 0.20619546646824324,
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": 0.13170770234824142,
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": 0.4095579952029198,
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": 0.15026625042088768,
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": 0.10227258555970785
+ },
+ "commitments_verified": {
+  "swe-fix-r0018-01": true,
+  "swe-fix-r0018-05": true,
+  "swe-fix-r0018-06": true,
+  "swe-fix-r0018-07": true,
+  "swe-fix-r0018-08": true,
+  "swe-fix-r0018-09": true
+ },
+ "commitments_ok": true
+}
