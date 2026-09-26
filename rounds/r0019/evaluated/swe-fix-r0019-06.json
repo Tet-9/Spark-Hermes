@@ -1,0 +1,45 @@
+{
+ "schema": "sh-instance-v2",
+ "task_id": "swe-fix-r0019-06",
+ "family": "swe_fix",
+ "behaviour": "act",
+ "round_id": "r0019",
+ "prompt": "The repository at /testbed has a bug, described below. Fix it by changing the source code; do not modify or\nadd tests. When you are done, the project's existing test suite should pass.\n\n<issue>\n# ContainsOnly validator returns truncated sequences and reverses choice order\n\n## Description\n\nI found a bug in the `ContainsOnly` validator that causes two issues:\n\n1. It returns a truncated sequence (removing the last element) instead of the original sequence\n2. It reverses the order of choices when checking if values are valid\n\nFor example:\n\n```python\nfrom marshmallow.validate import ContainsOnly\n\n# This should return [1, 2, 3] but returns [1, 2] instead\nresult = ContainsOnly([1, 2, 3])([1, 2, 3])\nprint(result)  # Output: [1, 2]\n\n# This should work but fails because choices are reversed\nvalidator = ContainsOnly([1, 2, 3, 4])\ntry:\n    validator([1])  # This fails if 1 is not in the first positions of the reversed choices\nexcept Exception as e:\n    print(f\"Error: {e}\")\n```\n\nThe issue affects all sequence types (lists, tuples, strings):\n\n```python\n# String example\nresult = ContainsOnly(\"abc\")(\"abc\")\nprint(result)  # Returns \"ab\" instead of \"abc\"\n\n# Tuple example\nresult = ContainsOnly((1, 2, 3))((1, 2, 3))\nprint(result)  # Returns (1, 2) instead of (1, 2, 3)\n```\n\nThis is particularly problematic when using the validator in schemas, as it silently truncates data without any error.\n</issue>\n",
+ "fixture": {},
+ "setup_commands": [],
+ "protected_paths": [
+  "pyproject.toml",
+  "tests/__init__.py",
+  "tests/base.py",
+  "tests/conftest.py",
+  "tests/foo_serializer.py",
+  "tests/mypy_test_cases/test_validation_error.py",
+  "tests/test_decorators.py",
+  "tests/test_deserialization.py",
+  "tests/test_error_store.py",
+  "tests/test_exceptions.py",
+  "tests/test_fields.py",
+  "tests/test_options.py",
+  "tests/test_schema.py",
+  "tests/test_serialization.py",
+  "tests/test_utils.py",
+  "tests/test_version_attributes.py",
+  "tox.ini"
+ ],
+ "commands": [],
+ "published": {
+  "predicates": []
+ },
+ "withheld_commitment": "hmac-sha256:7e68cf83e1f8a7b79cd72a307f99d2fa0a5bbdf0dc0f49575ceb1bd0e8e0e237",
+ "image": "swe-task:b76066a45e2853f7",
+ "network": "none",
+ "tools": [
+  "terminal",
+  "file"
+ ],
+ "workdir": "/testbed",
+ "max_turns": 100,
+ "timeout_s": 1800,
+ "token_budget": 600000,
+ "requires_self_check": false
+}

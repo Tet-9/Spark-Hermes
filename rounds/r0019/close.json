@@ -1,0 +1,175 @@
+{
+ "schema": "sh-round-close-v3",
+ "scoring": "sh-scoring-v3 (credit)",
+ "round_id": "r0019",
+ "era": "e0",
+ "tasks": [
+  "swe-fix-r0019-02",
+  "swe-fix-r0019-03",
+  "swe-fix-r0019-04",
+  "swe-fix-r0019-05",
+  "swe-fix-r0019-06",
+  "swe-fix-r0019-09"
+ ],
+ "episodes": 288,
+ "family_stats": {
+  "swe_fix": {
+   "schema": "sh-family-stats-v2",
+   "family": "swe_fix",
+   "era": "e0",
+   "window": [
+    "r0012",
+    "r0013",
+    "r0014",
+    "r0015",
+    "r0016",
+    "r0017",
+    "r0018",
+    "r0019"
+   ],
+   "null": {
+    "n": 48,
+    "successes": 4,
+    "p": 0.08333333333333333,
+    "mean_credit": 0.1533,
+    "wilson": [
+     0.0329,
+     0.1955
+    ],
+    "efficiency": {
+     "api_calls": {
+      "median": 19.5,
+      "p25": 15.0,
+      "n": 4
+     },
+     "tool_calls": {
+      "median": 25.0,
+      "p25": 16.0,
+      "n": 4
+     }
+    }
+   },
+   "canon": {
+    "n": 6,
+    "successes": 0,
+    "p": 0.0,
+    "mean_credit": 0.0,
+    "wilson": [
+     0.0,
+     0.3903
+    ],
+    "efficiency": {},
+    "delta_c": -0.1533,
+    "delta_e": {},
+    "delta_e_paired_instances": 0
+   },
+   "label": "frontier",
+   "partial_rate": 0.0185,
+   "in_rotation": true,
+   "retirement": null
+  }
+ },
+ "scores": {
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": {
+   "hotkey": "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh",
+   "n": 48,
+   "score": 0.099206,
+   "delta_c": 0.04604247485569485,
+   "delta_e": {
+    "api_calls": -0.09096488788893531,
+    "tool_calls": -0.025808542564259074
+   },
+   "gate": true,
+   "se": 0.041534,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.099206
+  },
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": {
+   "hotkey": "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ",
+   "n": 48,
+   "score": 0.105035,
+   "delta_c": 0.04647326107053693,
+   "delta_e": {
+    "api_calls": -0.12319351194057804,
+    "tool_calls": -0.029276046511185372
+   },
+   "gate": true,
+   "se": 0.045751,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.105035
+  },
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": {
+   "hotkey": "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6",
+   "n": 48,
+   "score": 0.190799,
+   "delta_c": 0.12051796151157558,
+   "delta_e": {
+    "api_calls": -0.26717463584199497,
+    "tool_calls": -0.152142853888106
+   },
+   "gate": true,
+   "se": 0.054907,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.190799
+  },
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": {
+   "hotkey": "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb",
+   "n": 48,
+   "score": 0.13688,
+   "delta_c": 0.07464281810622966,
+   "delta_e": {
+    "api_calls": -0.31268695346272396,
+    "tool_calls": -0.18715392215575166
+   },
+   "gate": true,
+   "se": 0.048623,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 48,
+   "mean_d": 0.13688
+  },
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": {
+   "hotkey": "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg",
+   "n": 42,
+   "score": 0.049206,
+   "delta_c": 0.0,
+   "delta_e": {
+    "api_calls": -0.4310242370463315,
+    "tool_calls": -0.4077486094271925
+   },
+   "gate": true,
+   "se": 0.05584,
+   "overfit_rate": 0.0,
+   "dq": 0,
+   "reason": null,
+   "paired": 42,
+   "mean_d": 0.049206
+  }
+ },
+ "weights": {
+  "5C5JKnm8M8pyn6neLqwmAKZ7DoyzJf7ZB1Mabv62LwfSEsHh": 0.17071340810770813,
+  "5CoTfEgMhZ46ETtT6RSdt3RQkXizYu3vy9Spg33qTSt3eBtQ": 0.18074393505023006,
+  "5DPhKi77DLciQzNDr6iCZ2cD41oHcV75vLdf82d3crVnERN6": 0.32832638704859185,
+  "5Di3Dd8PKn7uQbBc4WrzxkUqqvSL8QS3KVgCPSt3kzPE5KFb": 0.23554272223235578,
+  "5E4iMWRACSJrnbnCLNVfWXjHc5VRkgzRfaAzBiB1VXfkqPUg": 0.0846735475611141
+ },
+ "commitments_verified": {
+  "swe-fix-r0019-02": true,
+  "swe-fix-r0019-03": true,
+  "swe-fix-r0019-04": true,
+  "swe-fix-r0019-05": true,
+  "swe-fix-r0019-06": true,
+  "swe-fix-r0019-09": true
+ },
+ "commitments_ok": true
+}
